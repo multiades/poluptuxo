@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="el">
+  <head>
+    <meta charset="utf-8">
+    <title>Πολύπτυχο | Φροντιστήριο μέσης εκπαίδευσης</title>
+    <link rel="stylesheet" href="./assets/styles/styles.css">
+  </head>
+  <body>
+    <header>
+      <input type="checkbox" id="navbar_toggle" autocomplete="off" hidden unchecked>
+      <label for="navbar_toggle" tabindex="0" aria-label="Είσοδος - έξοδος από την πλοήγηση" aria-controls="navbar" aria-expanded="false" role="button" autocomplete="off">Γεια</label>
+      <nav aria-hidden="true" id="navbar"> <!-- Screen readers can't access it initially, need the ID for the toggle's aria-controls attribute -->
+        <img src="./assets/images/owl.svg" class="logo" alt="Λογότυπο πολύπτυχου, μοβ κουκουβάγια">
+        <a href="#">
+          <img src="./assets/images/home.svg" aria-hidden="true">
+          <span class="destination">Αρχική</span>
+        </a>
+        <input type="checkbox" id="study_hall" autocomplete="off" class="submenu" hidden unchecked>
+        <label for="study_hall" role="button" class="dropdown">
+          <svg></svg>
+          <span class="destination">Το φροντιστήριο</span>
+        </label>
+        <ul>
+          <li><a href="#">Εγκαταστάσεις</a></li>
+          <li><a href="#">Αναγνωστήριο</a></li>
+        </ul>
+        <input type="checkbox" id="schedule_cards" autocomplete="off" class="submenu" hidden unchecked>
+        <label for="schedule_cards" role="button" class="dropdown">
+          <svg></svg>
+          <span class="destination">Προγράμματα σπουδών</span>
+        </label>
+        <ul>
+          <li><a href="#">ΓΕΛ</a></li>
+          <li><a href="#">ΕΠΑΛ</a></li>
+          <li><a href="#">Γυμνάσιο</a></li>
+        </ul>
+        <a href="#">
+          <svg></svg>
+          <span class="destination">Επικοινωνία</span>
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="schedules"> 
+        <figure class="schedule" id="c-gel"> <!-- The id attribute is needed for the JS button share script -->
+          <figcaption>
+            <div class="banner"><span>Θερινό & Χειμερινό</span></div>
+            <img src="../assets/images/temple.svg" aria-hidden="true">
+            <div class="grade-index"><span>γ'</span></div>
+            <div class="grade-division"><span>λυκείου</span></div>
+            <div class="field-name"><span>Ανθρωπιστικών<br>Επιστημών</span></div>
+            <div class="field-number"><span>1<sup>ο</sup></span></div>
+            <div class="field-label"><span>Επιστημονικό<br>Πεδίο</span></div>
+          </figcaption>
+          <table>
+            <tbody>
+              <tr>
+                <td class="subject">Έκθεση</td>
+                <td class="hours">_</td>
+              </tr>
+              <tr>
+                <td class="subject">Αρχαία</td>
+                <td class="hours">_</td>
+              </tr>
+              <tr>
+                <td class="subject">Λατινικά</td>
+                <td class="hours">_</td>
+              </tr>
+              <tr>
+                <td class="subject">Ιστορία</td>
+                <td class="hours">_</td>
+              </tr>
+              <tr>
+                <td class="total-label">Σύνολο</td>
+                <td class="hours">_</td>
+              </tr>
+            </tbody>
+          </table>
+          <a class="download" href="#" download><span>Λήψη</span></a>
+          <input type="text" class="share" readonly value="g_gel/gel_3.html#c-gel">
+        </figure>
+      </section> <!-- End of section.schedules -->
+    </main>
+
+    <footer>
+      <img src="./assets/images/owl.svg" alt="Λογότυπο, μια μπλε και κίτρινη κουκουβάγια" class="logo">
+      <div class="contact">
+        <h2>Eπικοινωνία<h2>
+        <address>
+            <a href="tel:00302108848188"><img src="./assets/images/" alt="" arial-hidden="true">210-8848188</a><br>
+            <a href="mailto:info@poluptuxo.gr" lang="en"><img src="./assets/images/" alt="" arial-hidden="true">info@poluptuxo.gr</a>
+          </address>
+      </div> <!-- End of div.contact -->
+      <div class="address">
+        <h2>Διεύθυνση<h2>
+        <address>
+          <a href="#"><img src="./assets/images/" alt="" arial-hidden="true">Καυκάσου 134, Άνω Κυψέλη, 11363</a>
+        </address>
+      </div> <!-- End of div.address -->
+       <div class="social">
+        <h2>Ακολουθήστε μας</h2>
+        <address>
+          <a href="#" lang="en"><img src="./assets/images/" alt="" arial-hidden="true">facebook</a>
+        </address>
+      </div> <!-- End of div.social -->
+    <footer>
+    
+    <!-- Scripts -->
+    <script src="./assets/scripts/navbar.js"></script>
+    <script src="./assets/scripts/label.js"></script>
+
+  </body>
+</html>
