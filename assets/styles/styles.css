@@ -321,7 +321,8 @@ body {
       
             &.banner {
               grid-area: banner;
-              margin: -12px 32px 32px 12px; /* For the banner, translating Y creates an undesired stacking context */
+              margin: -12px 48px 48px 12px; /* For the banner, translating Y creates an undesired stacking context */
+              font-size: 16px;
               background-image: var(--purple-grad);
             }
   
