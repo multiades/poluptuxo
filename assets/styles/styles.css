@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  flex-shrink: 0; /* For every flex item to not be squished (scootched) */
 
   /* Custom CSS properties */
   &:root {
@@ -124,7 +125,7 @@ body {
       &>img.logo {
         width: 80px;
         height: auto;
-        margin: 16px 0 16px 16px;
+        margin: 8px 0 8px 8px;
         align-self: flex-start;
       }
 
@@ -156,7 +157,7 @@ body {
       & a,
       & label.dropdown {
         width: 100%;
-        height: 2rem;
+        height: 4rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -226,8 +227,24 @@ body {
         }
       }
     }
-  }
-        
+   
+    &>section.hero {
+      &>div.slogan {
+        background-color: Rebecca purple;
+        color: white;
+        text-align: center;
+        padding: 2rem;
+        clip-path: polygon(
+          0 0,
+          50% 16px,     /* triangle tip */
+          100% 0,
+          100% 100%,
+          0 100%
+        );
+      }
+    }
+  } 
+       
   &>main {
     min-height: 200vh;
     padding: 64px;
