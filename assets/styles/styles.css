@@ -28,7 +28,7 @@
 
 body {
   font-size: medium;
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
 
   & a,
   & label[for],
