@@ -229,8 +229,10 @@ body {
     }
    
     &>section.hero {
+      margin-top: 128px; 
+
       &>div.slogan {
-        background-color: Rebecca purple;
+        background-color: rebeccapurple;
         color: white;
         text-align: center;
         padding: 2rem;
