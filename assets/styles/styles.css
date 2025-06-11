@@ -43,6 +43,8 @@ body {
   }
     
   &>header {
+    font-size: 2rem;
+    
     &>input#navbar_toggle:checked {
       &~nav {
         height: 100vh;
@@ -245,35 +247,50 @@ body {
       &>figure.schedule {
         width: 640px;
         height: auto;
-        padding-bottom: 32px;
-        background-image: var(--coral-grad);
-        font-size: 24px;
-        box-shadow: 0 4px 8px #333;
+        padding-bottom: 96px;
+        font-size: 32px;
+        box-shadow: 0 4px 12px #333;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        row-gap: 48px;
+        row-gap: 64px;
+
+        &#humanities-social {
+          background-image: var(--coral-grad);
+        }
+
+        &#natural {
+          background-color: lightgreen;
+        }
+
+        &#medical {
+          background-color: lightblue;
+        }
   
+        &#econ-informatics {
+          background-color: gold;
+        }
+
         &>figcaption {
           width: 100%;
           display: grid;
-          grid-template-rows: 32px 48px 64px;
-          grid-template-columns: 200px 48px 1fr;
+          grid-template-rows: 48px 64px 96px;
+          grid-template-columns: 320px 64px 1fr;
           grid-template-areas: 
             "banner banner banner"
             "icons grade-index grade-division"
             "field-name field-number field-label";
-          row-gap: 16px;
+          row-gap: 32px;
 
           &>img {
             grid-area: icons;
-            width: 48px;
-            height: 48px;
+            width: 64px;
+            height: 64px;
             margin-left: 8px;
 
             &+img { /* If a second image exists */
-              margin-left: 64px;
+              margin-left: 80px;
             }
           }
  
@@ -285,39 +302,40 @@ body {
       
             &.banner {
               grid-area: banner;
-              margin: -16px 50px 16px 50px; /* For the banner, translating Y creates an undesired stacking context */
+              margin: -24px 80px 24px 80px; /* For the banner, translating Y creates an undesired stacking context */
               background-image: var(--purple-grad);
             }
   
             &.grade-index {
               grid-area: grade-index;
-              font-size: 32px;
+              font-size: 48px;
               background-image: var(--purple-grad);
             }
 
             &.grade-division {
               grid-area: grade-division;
-              font-size: 32px;
+              font-size: 48px;
             }
 
             &.field-name {
               grid-area: field-name;
               background-image: var(--purple-grad);
               color: white;
-              font-size: 24px;
+              font-size: 32px;
             }
 
             &.field-number {
               grid-area: field-number;
-              font-size: 32px;
+              font-size: 48px;
               font-style: oblique;
+              font-weight: bold;
               color: black;
               background-color: #ff9900;
             }
   
             &.field-label {
               grid-area: field-label;
-              font-size: 20px;
+              font-size: 32px;
               color: black;
               background-color: #ff9900;
             }
@@ -413,9 +431,13 @@ body {
       justify-content: flex-start;
       align-items: center;
       row-gap: 1rem;
+
+      &>h2 {
+        font-size: 2rem;
+      }
       
       & a {
-        font-size: 1.25rem;
+        font-size: 1.75rem;
         color: #333;
         text-align: center;
       }
@@ -459,9 +481,9 @@ body {
   }
 } 
 
-/*====MEDIA QUERIES====
+/*====MEDIA QUERIES====*/
 
-First breakpoint 
+/* First breakpoint */
 @media only screen and (min-width: 768px) {
   body {
     &>header {
@@ -512,7 +534,7 @@ First breakpoint
   }
 }
 
- Second breakpoint 
+/* Second breakpoint */
 @media only screen and (min-width: 1200px) {
   body {
     &>header {
@@ -552,7 +574,7 @@ First breakpoint
   }
 }
 
-
+/*
 Coarse pointer is not precise, touch 
 @media only screen and (hover: none) {
   body {
