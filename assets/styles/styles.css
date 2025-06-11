@@ -462,7 +462,7 @@ body {
 /*====MEDIA QUERIES====*/
 
 /* First breakpoint */
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 768px) {
   body {
     &>header {
       &>input#navbar_toggle:checked~label[for="navbar_toggle"]>span {
