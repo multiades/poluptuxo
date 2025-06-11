@@ -2,7 +2,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  flex-shrink: 0; /* For every flex item to not be squished (scootched) */
 
   /* Custom CSS properties */
   &:root {
@@ -114,7 +113,7 @@ body {
       align-items: center;
 
       &>* {
-        flex-shrink: 0; /* The flex items won't get squished on overflows */
+        flex-shrink: 0; /* The flex items won't get squished (scootched) on overflows */
       }
 
       /* Pointer behavior when the navbar is retracted */
@@ -175,7 +174,6 @@ body {
 
       & label.dropdown {
         &>span.destination {
-          flex-shrink: 0;
  
           &::after {
             content: "\25bc";
