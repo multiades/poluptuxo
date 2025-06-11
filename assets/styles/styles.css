@@ -243,7 +243,7 @@ body {
       gap: 50px;
   
       &>figure.schedule {
-        width: 400px;
+        width: 640px;
         height: auto;
         padding-bottom: 32px;
         background-image: var(--coral-grad);
@@ -459,9 +459,9 @@ body {
   }
 } 
 
-/*====MEDIA QUERIES====*/
+/*====MEDIA QUERIES====
 
-/* First breakpoint */
+First breakpoint 
 @media only screen and (min-width: 768px) {
   body {
     &>header {
@@ -512,7 +512,7 @@ body {
   }
 }
 
-/* Second breakpoint */
+ Second breakpoint 
 @media only screen and (min-width: 1200px) {
   body {
     &>header {
@@ -533,13 +533,6 @@ body {
           width: 80px;
           margin: 8px 0 8px 8px;
         }
-        
-        /*
-        & a,
-        & label.dropdown {
-          font-size: 20px;
-        } 
-        */
       }
 
       &>label[for="navbar_toggle"]>span {
@@ -559,7 +552,6 @@ body {
   }
 }
 
-/*
 
 Coarse pointer is not precise, touch 
 @media only screen and (hover: none) {
