@@ -1,0 +1,576 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  /* Custom CSS properties */
+  &:root {
+    --text-primary: #b6b6b6;
+    --text-secondary: cyan;
+    --bg-primary: #333;
+    --bg-secondary: #141418;
+    --coral-grad: linear-gradient(135deg, #EF7874 0%, #EC635D 100%);
+    --purple-grad: linear-gradient(135deg, #9C4B9A 0%, #A971AD 100%);
+    --yellow-grad: linear-gradient(135deg, #FCC048 0%, #FDBD41 100%);
+  }
+
+  &.visually_hidden {
+    position: absolute;
+    width: 1px; /* Ensure that screen readers acknowledge it */
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0); /* Derpecated and substituted with clip-path, but more widespread with old browsers and screen readers */
+    white-space: no-wrap; /* Not enlarging the height */
+    border: 0;
+  }
+}
+
+body {
+  font-size: medium;
+  /* overflow-x: hidden; */
+
+  & a,
+  & label[for],
+  & button {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  
+  & a {
+    text-decoration: none;
+    font-style: normal;
+  }
+    
+  &>header {
+    &>input#navbar_toggle:checked {
+      &~nav {
+        height: 100vh;
+        transition-delay: 0s;
+
+        &>a,
+        &>label.dropdown { /* Immediate descendants only*/
+          &>span.destination {
+            opacity: 1;
+            transition-delay: 600ms; /* 600ms delay on the transition, waiting for the navbar to fully expand */
+          }
+        }
+      }
+
+      &~label[for="navbar_toggle"] {
+        /* transform: translateX(224px); */
+
+        /* The hamburger button animation */
+        &>span {
+          &:nth-child(1) {
+            transform-origin: top left;
+            transform: translate(16px, 2px) rotate(45deg); /* Translate first, other wise the transform-origin skewes the translation after rotation */
+          }
+
+          &:nth-child(2) {
+            transform-origin: top right;
+            transform: translate(-16px, 2px) rotate(-45deg); 
+          }
+          
+          /* Central blocks move out and become invisible */
+          &:nth-child(3) {
+            transform: translateX(-16px);
+            opacity: 0;
+          }
+
+          &:nth-child(4) {
+            transform: translateX(16px);
+            opacity: 0;
+          }
+
+          &:nth-child(5) {
+            transform-origin: bottom left;
+            transform: translate(16px, -2px) rotate(-45deg); 
+          }
+
+          &:nth-child(6) {
+            transform-origin: bottom right;
+            transform: translate(-16px, -2px) rotate(45deg); 
+          }
+        }
+      }
+    }
+
+    &>nav {
+      position: fixed;
+      width: 100%; 
+      height: 192px; /* Auto measurements can't be used on transitions */
+      overflow: hidden auto;
+      background-color: var(--bg-primary);
+      transition: height 600ms ease;
+      transition-delay: 200ms; /* When navbar is unchecked, wait for the text to fade out */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      &>* {
+        flex-shrink: 0; /* The flex items won't get squished on overflows */
+      }
+
+      /* Pointer behavior when the navbar is retracted */
+      &.inert {
+        pointer-events: none;
+        user-select: none;
+      }
+   
+      &>img.logo {
+        width: 160px;
+        height: auto;
+        margin: 16px 0 16px 16px;
+        align-self: flex-start;
+      }
+
+      & input:checked+label.dropdown { /* Only the immediate sibling label */
+        &>span.destination::after {
+          transform: rotate(-180deg);
+        }
+
+        &+ul { /* Only the immediate sibling */
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          background-color: gray;
+          list-style: none; 
+
+          &>li {
+            width: 100%;
+            flex-shrink: 0;
+            
+            &>label.dropdown+ul { /* Submenus of depth 2 */
+              background-color: lightgray; 
+            }
+          }
+        }   
+      }
+
+      & a,
+      & label.dropdown {
+        width: 100%;
+        height: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 20px;
+
+        &:hover {
+        /* 
+        &:focus,
+        &:focus-visible It abolishes moot focus, fallback is focus 
+        */
+          background-color: rebeccapurple;
+        }
+      }
+
+      & label.dropdown {
+        &>span.destination {
+          flex-shrink: 0;
+ 
+          &::after {
+            content: "\25bc";
+            display: inline-block; /* To respect the transition */
+            margin-left: 16px;
+            transition: transform 600ms ease;
+          }
+        }
+ 
+        &+ul {
+          display: none;
+        }
+      }
+
+      &>a,
+      &>label.dropdown {
+        &>span.destination { /* Only the spans of the top level navigation items */
+          opacity: 0;
+          overflow: hidden;
+          transition: opacity 200ms ease;
+          transition-delay: 0s;
+        }
+      } 
+    }
+
+    &>label[for="navbar_toggle"] {
+      position: fixed;
+      top: 34px;
+      right: 34px;
+      width: 128px;
+      height: 128px;
+      display: grid;
+      grid-template-columns: repeat(2 , 1fr);
+      grid-template-rows: repeat(3, 2fr);
+      row-gap: 16px;
+
+      &>span {
+        height: 16px;
+        transition: all 0.2s ease-in-out;
+        background-color: white;
+
+         /* Line halves 1, 3, 5 */
+        &:nth-child(odd) {
+          border-radius: 16px 0 0 16px; /* Rounded border only on the left side */
+        }
+
+         /* Lines 2, 4, 6 */
+        &:nth-child(even) {
+          border-radius: 0 16px 16px 0; /* Rounded border only on the right side */
+        }
+      }
+    }
+  }
+        
+  &>main {
+    min-height: 200vh;
+    padding: 192px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 128px;
+
+    &>section.schedules {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 50px;
+  
+      &>figure.schedule {
+        width: 400px;
+        height: auto;
+        padding-bottom: 32px;
+        background-image: var(--coral-grad);
+        font-size: 24px;
+        box-shadow: 0 4px 8px #333;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        row-gap: 48px;
+  
+        &>figcaption {
+          width: 100%;
+          display: grid;
+          grid-template-rows: 32px 48px 64px;
+          grid-template-columns: 200px 48px 1fr;
+          grid-template-areas: 
+            "banner banner banner"
+            "icons grade-index grade-division"
+            "field-name field-number field-label";
+          row-gap: 16px;
+
+          &>img {
+            grid-area: icons;
+            width: 48px;
+            height: 48px;
+            margin-left: 8px;
+
+            &+img { /* If a second image exists */
+              margin-left: 64px;
+            }
+          }
+ 
+          &>div {
+            display: flex; /* Center each section's text, which lies within a span element, not a raw text node */
+            justify-content: center;
+            align-items: center;
+            color: white;
+      
+            &.banner {
+              grid-area: banner;
+              margin: -16px 50px 16px 50px; /* For the banner, translating Y creates an undesired stacking context */
+              background-image: var(--purple-grad);
+            }
+  
+            &.grade-index {
+              grid-area: grade-index;
+              font-size: 32px;
+              background-image: var(--purple-grad);
+            }
+
+            &.grade-division {
+              grid-area: grade-division;
+              font-size: 32px;
+            }
+
+            &.field-name {
+              grid-area: field-name;
+              background-image: var(--purple-grad);
+              color: white;
+              font-size: 24px;
+            }
+
+            &.field-number {
+              grid-area: field-number;
+              font-size: 32px;
+              font-style: oblique;
+              color: black;
+              background-color: #ff9900;
+            }
+  
+            &.field-label {
+              grid-area: field-label;
+              font-size: 20px;
+              color: black;
+              background-color: #ff9900;
+            }
+          }
+        }
+ 
+        &>table {
+          border: none;
+          border-collapse: separate;
+          border-spacing: 16px 8px; /* column gap, row gap */
+  
+          &>tbody>tr {
+            &::before {
+              content: '\25B8'; 
+              display: inline-block;
+              vertical-align: middle;
+              color: rebeccapurple;
+            }
+
+            &>td {
+              padding: 4px 16px;
+
+              &.subject {
+                background-color: #E6E6E6;
+                color: #333;
+              }
+     
+              &.hours {
+                background-image: var(--purple-grad);
+                color: #fff;
+                text-align: center;
+                font-weight: bold;
+              }
+
+              &.total-label {
+                background-image: var(--purple-grad);
+                color: #fff;
+              }
+            }
+          }
+        }
+  
+        &>a.download {
+          width: auto;
+          height: 48px;
+          padding: 0 16px;
+          border: 1px solid black;
+          border-radius: 32px;
+          font-size: 24px;
+          color: black;
+          background-color: white;
+          text-decoration: none;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &:hover {
+            color: white;
+            background-color: gray; 
+            box-shadow: 0 2px 4px black;
+          }
+        }
+
+        &>input.share {
+          width: 300px;
+          height: 48px;
+          text-align: right;
+          font-size: 24px;
+        }
+      }
+    }
+  }
+
+  &>footer {
+    background-color: gray;
+    padding: 32px;
+    display: grid;
+    grid-template-areas:
+      "one"
+      "two"
+      "logo"
+      "three"
+      "four";
+    grid-template-columns: 1fr;
+    column-gap: 1rem;
+    row-gap: 2rem;
+    justify-items: center;
+    align-items: start;
+  
+    &>div {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      row-gap: 1rem;
+      
+      & a {
+        font-size: 1.25rem;
+        color: #333;
+        text-align: center;
+      }
+
+      &.contact {
+        grid-area: one;
+      }
+
+      &.address {
+        grid-area: two;
+      }
+
+      &.links {
+        grid-area: three;
+      }
+
+      &.social {
+        grid-area: four;
+      }
+
+      &>address {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      
+      &>h2 {
+        font-size: 1.5rem;
+        color: white;
+        text-align: center;
+      }
+    }
+
+    &>img {
+      display: block;
+      width: 12rem;
+      height: auto;
+      grid-area: logo;
+      place-self: center;
+    }    
+  }
+} 
+
+/*====MEDIA QUERIES====*/
+
+/* First breakpoint */
+@media only screen and (min-width: 600px) {
+  body {
+    &>header {
+      &>input#navbar_toggle:checked~label[for="navbar_toggle"]>span {
+          &:nth-child(1) {
+            transform: translate(8px, 2px) rotate(45deg); /* Translate first, other wise the transform-origin skewes the translation after rotation */
+          }
+
+          &:nth-child(2) {
+            transform: translate(-8px, 2px) rotate(-45deg); 
+          }
+
+          &:nth-child(5) {
+            transform: translate(8px, -2px) rotate(-45deg); 
+          }
+
+          &:nth-child(6) {
+            transform: translate(-8px, -2px) rotate(45deg); 
+          }
+      }
+
+      &>nav {
+        height: 128px;
+
+        &>img.logo {
+          width: 96px;
+        }
+      }
+
+      &>label[for="navbar_toggle"] {
+        width: 48px;
+        height: 48px;
+        row-gap: 8px;
+
+        &>span { 
+          height: 8px;
+        }
+      }
+    }
+
+    &>footer {
+      grid-template-areas:
+        "one two"
+        "logo logo"
+        "three four";
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}
+
+/* Second breakpoint */
+@media only screen and (min-width: 1200px) {
+  body {
+    &>header {
+      &>input#navbar_toggle:checked {
+        &~nav {
+          width: 320px;
+        }
+      }
+
+      &>nav {
+        width: 96px; 
+        height: 100vh;
+        transition-property: width;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        &>img.logo {
+          width: 80px;
+          margin: 8px 0 8px 8px;
+        }
+        
+        /*
+        & a,
+        & label.dropdown {
+          font-size: 20px;
+        } 
+        */
+      }
+
+      &>label[for="navbar_toggle"]>span {
+        background-color: black;
+      }
+    }
+
+    &>main,
+    &>footer {
+      margin-left: 96px;
+    }
+
+    &>footer {
+      grid-template-areas: "one two logo three four";
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+}
+
+/*
+
+Coarse pointer is not precise, touch 
+@media only screen and (hover: none) {
+  body {
+    &>header {
+      &>nav {
+        top: 0;
+        width: 100vw;
+        height: 64px;
+      }
+    }
+  }
+}
+ */
