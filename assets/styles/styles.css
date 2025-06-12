@@ -61,7 +61,6 @@ body {
       }
 
       &~label[for="navbar_toggle"] {
-
         /* The hamburger button animation */
         &>span {
           &:nth-child(1) {
@@ -101,7 +100,9 @@ body {
     &>nav {
       position: fixed;
       top: 0;
-      width: 100%; 
+      left: 0;
+      width: 100vw; /* Fallback */
+      width: 100lvw;
       height: 64px; /* Auto measurements can't be used on transitions */
       overflow: hidden auto;
       background-color: var(--bg-primary);
@@ -166,15 +167,14 @@ body {
         /*
         &:hover,
         &:focus,
-        &:focus-visible It abolishes moot focus, fallback is focus 
-        */
+        &:focus-visible { It abolishes moot focus, fallback is focus 
           background-color: rebeccapurple;
         }
+        */
       }
 
       & label.dropdown {
         &>span.destination {
- 
           &::after {
             content: "\25bc";
             display: inline-block; /* To respect the transition */
