@@ -227,23 +227,27 @@ body {
     }
    
     &>section.hero {
-      margin-top: 128px; 
+      margin-top: 64px;
 
-      &>div.slogan {
+      &>img { /* The hero image */
+        display: block;
         width: 100vw;
+        height: auto;
+        object-fit: cover;
+      }
+
+      &>div {
+        width: 100vw;
+        margin-top: -48px;
         aspect-ratio: 16 / 1; /* Keep the height proportional */
-        
+        display: flex;
+        justify-conter: center;
+        align-items: center;
         background-color: rebeccapurple;
-        color: white;
-        font-size: 20px;
-        font-weight: bold;
-        text-shadow: var(--banner-shadow);
-        text-align: center;
-        padding: 16px;
         clip-path: polygon( 
           0 0,
           45% 0,
-          50% 10%,     /* triangle tip */
+          50% 15%,     /* triangle tip */
           55% 0,
           100% 0,
           100% 100%,
@@ -251,6 +255,14 @@ body {
         );
         position: relative; /* Needed for creating the stacking context with the z-index */
         z-index: -1; /* Since clip-path creates a stacking context it should appear bellow the navbar */
+
+        &>span.slogan {
+          color: white;
+          font-size: 20px;
+          font-weight: bold;
+          text-shadow: var(--banner-shadow);
+          text-align: center;
+        }
       }
     }
   } 
@@ -558,20 +570,18 @@ body {
           background-color: black;
         }
       }
-      /*
-      &>section.hero>div.slogan {
-        padding: 20px;
+
+      &>section.hero>div {
         clip-path: polygon( 
           0 0,
-          47% 0,
-          50% 16px,     /* triangle tip */
-          53% 0,
+          48% 0,
+          50% 15%,     /* triangle tip */
+          52% 0,
           100% 0,
           100% 100%,
           0 100%
         );
       }
-      */
     }
 
     &>main,
