@@ -230,6 +230,9 @@ body {
       margin-top: 128px; 
 
       &>div.slogan {
+        width: 100vw;
+        aspect-ratio: 16 / 1; /* Keep the height proportional */
+        
         background-color: rebeccapurple;
         color: white;
         font-size: 20px;
@@ -240,7 +243,7 @@ body {
         clip-path: polygon( 
           0 0,
           45% 0,
-          50% 12px,     /* triangle tip */
+          50% 10%,     /* triangle tip */
           55% 0,
           100% 0,
           100% 100%,
@@ -555,7 +558,7 @@ body {
           background-color: black;
         }
       }
-
+      /*
       &>section.hero>div.slogan {
         padding: 20px;
         clip-path: polygon( 
@@ -568,6 +571,7 @@ body {
           0 100%
         );
       }
+      */
     }
 
     &>main,
