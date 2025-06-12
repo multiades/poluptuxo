@@ -547,11 +547,6 @@ body {
           height: 80px;
           margin: 8px 0 8px 8px;
         }
-
-        & a,
-        & label.dropdown {
-          font-size: 2rem;
-        }
       }
     
       /*
