@@ -432,6 +432,7 @@ body {
   &>footer {
     width: 100%;
     background-color: gray;
+    color: white;
     padding: 16px;
     display: grid;
     grid-template-areas:
@@ -538,6 +539,7 @@ body {
         width: 96px:
         height: 100vh; /* Fallback */
         height: 100lvh;
+        transition-property: width;
     
         &>img.logo {
           width: 80px;
