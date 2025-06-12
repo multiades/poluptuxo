@@ -234,15 +234,15 @@ body {
       &>div.slogan {
         background-color: rebeccapurple;
         color: white;
-        font-size: 1.5rem;
+        font-size: 20px;
         font-weight: bold;
         text-shadow: var(--banner-shadow);
         text-align: center;
-        padding: 2rem;
+        padding: 16px;
         clip-path: polygon( 
           0 0,
           45% 0,
-          50% 32px,     /* triangle tip */
+          50% 12px,     /* triangle tip */
           55% 0,
           100% 0,
           100% 100%,
@@ -489,13 +489,11 @@ body {
         grid-area: four;
       }
    
-      /*
       &>address {
         display: flex;
         justify-content: flex-start;
         align-items: center;
       }
-      */
     }
 
     &>img {
@@ -560,12 +558,11 @@ body {
       }
 
       &>section.hero>div.slogan {
-        font-size: 2rem;
-        padding: 4rem;
+        padding: 20px;
         clip-path: polygon( 
           0 0,
           47% 0,
-          50% 32px,     /* triangle tip */
+          50% 16px,     /* triangle tip */
           53% 0,
           100% 0,
           100% 100%,
