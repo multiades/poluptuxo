@@ -537,7 +537,7 @@ body {
       }
       
       &>nav {
-        width: 96px:
+        width: 96px;
         height: 100vh; /* Fallback */
         height: 100lvh;
         transition-property: width;
