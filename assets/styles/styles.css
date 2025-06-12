@@ -12,6 +12,7 @@
     --coral-grad: linear-gradient(135deg, #EF7874 0%, #EC635D 100%);
     --purple-grad: linear-gradient(135deg, #9C4B9A 0%, #A971AD 100%);
     --yellow-grad: linear-gradient(135deg, #FCC048 0%, #FDBD41 100%);
+    --banner-shadow: 0 0 8px black;
   }
 
   &.visually_hidden {
@@ -233,20 +234,21 @@ body {
       &>div.slogan {
         background-color: rebeccapurple;
         color: white;
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: bold;
-        text-shadow: 0 0 8px black;
+        text-shadow: var(--banner-shadow);
         text-align: center;
-        padding: 4rem;
+        padding: 2rem;
         clip-path: polygon( 
           0 0,
-          48% 0,
+          45% 0,
           50% 32px,     /* triangle tip */
-          52% 0,
+          55% 0,
           100% 0,
           100% 100%,
           0 100%
         );
+        position: relative; /* Needed for creating the stacking context with the z-index */
         z-index: -1; /* Since clip-path creates a stacking context it should appear bellow the navbar */
       }
     }
@@ -556,8 +558,22 @@ body {
           background-color: black;
         }
       }
+
+      &>section.hero>div.slogan {
+        font-size: 2rem;
+        padding: 4rem;
+        clip-path: polygon( 
+          0 0,
+          47% 0,
+          50% 32px,     /* triangle tip */
+          53% 0,
+          100% 0,
+          100% 100%,
+          0 100%
+        );
+      }
     }
-    
+
     &>main,
     &>footer {
       margin-left: 96px;
