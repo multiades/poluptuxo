@@ -509,7 +509,8 @@ body {
   body {
     &>header { 
       &>input#navbar_toggle:checked {
-        /* &~label[for="navbar_toggle"]>span {
+        /* 
+        &~label[for="navbar_toggle"]>span {
           &:nth-child(1) {
             transform: translate(8px, 2px) rotate(45deg);
           }
@@ -525,10 +526,10 @@ body {
           &:nth-child(6) {
             transform: translate(-8px, -2px) rotate(45deg); 
           }
-      }
-      */
+        }
+        */
 
-        &>nav {
+        &~nav {
           width: 320px;
         }
       }
@@ -601,4 +602,4 @@ Coarse pointer is not precise, touch
     }
   }
 }
- */
+*/
