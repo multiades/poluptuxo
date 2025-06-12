@@ -233,17 +233,21 @@ body {
       &>div.slogan {
         background-color: rebeccapurple;
         color: white;
+        font-size: 2rem;
+        font-weight: bold;
+        text-shadow: 0 0 8px black;
         text-align: center;
         padding: 4rem;
-        clip-path: polygon(
+        clip-path: polygon( 
           0 0,
-          45% 0,
-          50% 16px,     /* triangle tip */
-          55% 0,
+          48% 0,
+          50% 32px,     /* triangle tip */
+          52% 0,
           100% 0,
           100% 100%,
           0 100%
         );
+        z-index: -1; /* Since clip-path creates a stacking context it should appear bellow the navbar */
       }
     }
   } 
@@ -430,7 +434,6 @@ body {
   }
 
   &>footer {
-    width: 100%;
     background-color: gray;
     color: white;
     padding: 16px;
@@ -510,8 +513,7 @@ body {
   body {
     &>header { 
       &>input#navbar_toggle:checked {
-        &~label[for="navbar_toggle"]>span {
-          background-color: black; 
+        &~label[for="navbar_toggle"]>span { 
           /*
           &:nth-child(1) {
             transform: translate(8px, 2px) rotate(45deg);
@@ -549,17 +551,11 @@ body {
         }
       }
     
-      /*
       &>label[for="navbar_toggle"] {
-        width: 48px;
-        height: 48px;
-        row-gap: 8px;
-
         &>span { 
-          height: 8px;
+          background-color: black;
         }
       }
-      */
     }
     
     &>main,
