@@ -510,8 +510,9 @@ body {
   body {
     &>header { 
       &>input#navbar_toggle:checked {
-        /* 
         &~label[for="navbar_toggle"]>span {
+          background-color: black; 
+          /*
           &:nth-child(1) {
             transform: translate(8px, 2px) rotate(45deg);
           }
@@ -527,8 +528,8 @@ body {
           &:nth-child(6) {
             transform: translate(-8px, -2px) rotate(45deg); 
           }
+          */
         }
-        */
 
         &~nav {
           width: 320px;
