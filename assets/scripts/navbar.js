@@ -29,6 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Function that scales the navbar properly
+  function navScale {
+    const fullH = navbar.offsetHeight || window.innerHeight;
+    const collapsedH = 64;
+    const scale = collapsedH / fullH
+
+    
   // Initial run
   navInteractivity();
 

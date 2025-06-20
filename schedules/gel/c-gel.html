@@ -10,9 +10,8 @@
     <header>
       <input type="checkbox" id="navbar_toggle" autocomplete="off" hidden unchecked>
       <!-- Screen readers can't access the navbar initially, need the ID for the toggle's aria-controls attribute -->      
-      <nav id="navbar" aria-hidden="true" >
-        <img src="../../assets/images/owl.svg" class="logo" aria-hidden="true"> 
-        
+      <nav id="navbar" aria-hidden="true" > 
+
         <a href="../../index.html">
           <!-- img src="../../assets/images/home.svg" -->
           <span class="destination">Αρχική</span>
@@ -77,6 +76,7 @@
         <div id="trap" class="visually_hidden"></div> <!-- Trap focus to the navbar toggler -->
       </nav>
       <!-- Logo and label after the navbar in order to appear on top of it -->
+      <img src="../../assets/images/owl.svg" class="logo" aria-hidden="true">
       <label for="navbar_toggle" 
                  tabindex="0" 
                  aria-label="Είσοδος - έξοδος από την πλοήγηση" 
@@ -99,13 +99,11 @@
 
         <figure class="schedule" id="humanities-social">
           <figcaption>
-            <div class="banner"><span>Θερινό & Χειμερινό</span></div>
+            <div class="banner">Θερινό & Χειμερινό</div>
             <img src="../../assets/images/temple.svg" aria-hidden="true">
-            <div class="grade-index"><span>γ'</span></div>
-            <div class="grade-division"><span>λυκείου</span></div>
+            <div class="grade"><span class="grade-index">γ'</span><span>λυκείου</span></div>
             <div class="field-name"><span>Ανθρωπιστικών<br>Επιστημών</span></div>
-            <div class="field-number"><span>1<sup>ο</sup></span></div>
-            <div class="field-label"><span>Επιστημονικό<br>Πεδίο</span></div>
+            <div class="field-label"><span class="field-index">1<sup>ο</sup></span><span>Επιστημονικό<br>Πεδίο</span></div>
           </figcaption>
           <table>
             <tbody>
@@ -131,10 +129,43 @@
               </tr>
             </tbody>
           </table>
-          <a class="download" href="#" download>Λήψη (<span lang="en">PDF</span>)</a>
-          <input type="text" class="share" readonly value="">
+          <a class="download" href="#" download>Κοινοποίηση</a>
         </figure>
 
+        <figure class="schedule" id="humanities-social">
+          <figcaption>
+            <div class="banner">Θερινό & Χειμερινό</div>
+            <img src="../../assets/images/temple.svg" aria-hidden="true">
+            <div class="grade"><span class="grade-index">γ'</span><span>λυκείου</span></div>
+            <div class="field-name"><span>Ανθρωπιστικών<br>Επιστημών</span></div>
+            <div class="field-label"><span class="field-index">1<sup>ο</sup></span><span>Επιστημονικό<br>Πεδίο</span></div>
+          </figcaption>
+          <table>
+            <tbody>
+              <tr>
+                <td class="subject">Έκθεση</td>
+                <td class="hours">_</td>
+              </tr>
+              <tr>
+                <td class="subject">Αρχαία</td>
+                <td class="hours">_</td>
+              </tr>
+              <tr>
+                <td class="subject">Λατινικά</td>
+                <td class="hours">_</td>
+              </tr>
+              <tr>
+                <td class="subject">Ιστορία</td>
+                <td class="hours">_</td>
+              </tr>
+              <tr>
+                <td class="total-label">Σύνολο</td>
+                <td class="hours">_</td>
+              </tr>
+            </tbody>
+          </table>
+          <a class="download" href="#" download>Κοινοποίηση</a>
+        </figure>
         <figure class="schedule" id="natural"> 
           <figcaption>
             <div class="banner"><span>Θερινό & Χειμερινό</span></div>

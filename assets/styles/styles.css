@@ -48,15 +48,15 @@ body {
     
     &>input#navbar_toggle:checked {
       &~nav {
-        height: 100vh; /* Fallback */
-        height: 100lvh;
-        transition-delay: 0s;
+        transition-delay: 0s; /* Not plain 0 for values of time */
+        overflow: hidden auto;
+        transform: scaleY(1);
 
         &>a,
         &>label.dropdown { /* Immediate descendants only */
           &>span.destination {
             opacity: 1;
-            transition-delay: 600ms; /* 600ms delay on the transition, waiting for the navbar to fully expand */
+            transition-delay: 1s; /* 1s delay on the transition, waiting for the navbar to fully expand */
           }
         }
       }
@@ -64,6 +64,8 @@ body {
       &~label[for="navbar_toggle"] {
         /* The hamburger button animation */
         &>span {
+        background-color: red;
+    
           &:nth-child(1) {
             transform-origin: top left;
             transform: translate(8px, 2px) rotate(45deg); /* Translate first, other wise the transform-origin skewes the translation after rotation */
@@ -99,16 +101,23 @@ body {
     }
 
     &>nav {
-      position: fixed;
+      position: fixed; /* Create a stacking context */
       top: 0;
       left: 0;
+      z-index: 1; /* Appear on top of the arrows in the schedule tables that are at z-index 0 */
+      padding-top: 64px; /* For the text to appear below the img.logo and the label */
       width: 100vw; /* Fallback */
       width: 100lvw;
-      height: 64px; /* Auto measurements can't be used on transitions */
-      overflow: hidden auto;
+      height: 100vh; /* Fallback */
+      height: 100lvh; 
+      overflow: hidden;
       background-color: var(--bg-primary);
-      transition: height 600ms ease;
-      transition-delay: 200ms; /* When navbar is unchecked, wait for the text to fade out */
+      transform-origin: top center;
+      transform: scaleY(calc(64px / 100vh)); /* Fallback, drop the height at around 64px */
+      transform: scaleY(0.064);
+      /* Transition on GPU-accelerated scaleY instead of CPU-intensive height that causes document reflow */
+      transition: transform 1s ease;
+      transition-delay: 100ms; /* When navbar is unchecked, wait for the text to fade out */
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -122,13 +131,6 @@ body {
       &.inert {
         pointer-events: none;
         user-select: none;
-      }
-   
-      &>img.logo {
-        width: 48px;
-        height: auto;
-        margin: 8px 0 8px 8px;
-        align-self: flex-start;
       }
 
       & input:checked+label.dropdown { /* Only the immediate sibling label */
@@ -192,14 +194,26 @@ body {
         &>span.destination { /* Only the spans of the top level navigation items */
           opacity: 0;
           overflow: hidden;
-          transition: opacity 200ms ease;
+          transition: opacity 100ms ease;
           transition-delay: 0s;
         }
       } 
     }
 
+    &>img.logo,
     &>label[for="navbar_toggle"] {
       position: fixed;
+      z-index: 1; /* At the same level as the navbar */
+    }
+
+    &>img.logo {
+      top: 8px;
+      left: 8px;
+      width: 48px;
+      height: auto;
+    }
+
+    &>label[for="navbar_toggle"] {
       top: 12px;
       right: 12px;
       width: 40px;
@@ -211,7 +225,7 @@ body {
 
       &>span {
         height: 8px;
-        transition: all 0.3s ease-in-out;
+        transition: all 300ms ease-in-out; /* The animation is suffering if only transform, opacity and bg-color are listed */
         background-color: white;
 
          /* Line halves 1, 3, 5 */
@@ -283,16 +297,17 @@ body {
       gap: 32px;
   
       &>figure.schedule {
-        width: 320px;
-        height: auto;
-        padding-bottom: 16px;
-        font-size: 16px;
-        box-shadow: 0 4px 8px #333;
+        width: 384px;
+        height: 768px;
+        font-size: 20px;
+        /* filter: drop-shadow(0 2px 4px #333); It creates a stacking context*/
+        box-shadow: 0 0 8px #333;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        row-gap: 16px;
+        row-gap: 64px;
+        font-weight: 500; /* Only in hundreds */
 
         &#humanities-social {
           background-image: var(--coral-grad);
@@ -313,18 +328,20 @@ body {
         &>figcaption {
           width: 100%;
           display: grid;
-          grid-template-rows: 24px 32px 64px;
-          grid-template-columns: 160px 32px 1fr;
+          grid-template-rows: 32px 48px 64px;
+          grid-template-columns: 50% 50%;
           grid-template-areas: 
-            "banner banner banner"
-            "icons grade-index grade-division"
-            "field-name field-number field-label";
+            "banner banner"
+            "icons grade"
+            "field-name field-label";
           row-gap: 16px;
+          margin-top: -16px; /* Mainly for the banner, translating Y creates an undesired stacking context */
+          margin-bottom: 16px;
 
           &>img {
             grid-area: icons;
-            width: 32px;
-            height: 32px;
+            width: 48px;
+            height: 48px;
             margin-left: 8px;
 
             &+img { /* If a second image exists */
@@ -340,43 +357,47 @@ body {
       
             &.banner {
               grid-area: banner;
-              margin: -12px 48px 48px 12px; /* For the banner, translating Y creates an undesired stacking context */
-              font-size: 16px;
+              margin-left: 75px;
+              margin-right: 75px; 
               background-image: var(--purple-grad);
+              font-size: 20px;
             }
   
-            &.grade-index {
-              grid-area: grade-index;
-              font-size: 24px;
-              background-image: var(--purple-grad);
-            }
-
-            &.grade-division {
-              grid-area: grade-division;
-              font-size: 24px;
+            &.grade {
+              grid-area: grade;
+              font-size: 28px;
+              padding: 4px 0;
+   
+              &>span.grade-index {
+                padding: 2px 8px;
+                margin-right: 4px;
+                background-image: var(--purple-grad);
+              }
             }
 
             &.field-name {
               grid-area: field-name;
               background-image: var(--purple-grad);
               color: white;
-              font-size: 20px;
+              font-style: oblique;
             }
 
-            &.field-number {
-              grid-area: field-number;
-              font-size: 24px;
-              font-style: oblique;
-              font-weight: bold;
-              color: black;
-              background-color: #ff9900;
-            }
-  
             &.field-label {
               grid-area: field-label;
-              font-size: 20px;
-              color: black;
+              display: flex;
+              justify-content: space-around;
               background-color: #ff9900;
+              
+              &>span {
+                font-size: 18px;  
+                color: black;
+ 
+                &.field-index {
+                  font-size: 28px;
+                  font-style: oblique; 
+                  font-weight: 600;
+                }
+              }
             }
           }
         }
@@ -384,18 +405,31 @@ body {
         &>table {
           border: none;
           border-collapse: separate;
-          border-spacing: 16px 8px; /* column gap, row gap */
+          border-spacing: 16px 16px; /* column gap, row gap */
   
           &>tbody>tr {
+            width: auto;
+            height: 40px;
+
             &::before {
-              content: '\25B8'; 
-              display: inline-block;
-              vertical-align: middle;
-              color: rebeccapurple;
+              content: ''; 
+              width: 16px;
+              height: 16px;
+              background-color: rebeccapurple;
+              clip-path: polygon(
+                0 0,
+                100% 50%,
+                0 100%,
+                0 0
+              ); /* Right triangle shape; */
+              display: inline-block; /* To respect dimensions and margins */
+              transform: translateY(50%); 
+              position: relative;
+              z-index: 0;
             }
 
             &>td {
-              padding: 4px 16px;
+              padding: 8px 16px;
 
               &.subject {
                 background-color: #E6E6E6;
@@ -527,7 +561,21 @@ body {
   body {
     &>header { 
       &>input#navbar_toggle:checked {
-        &~label[for="navbar_toggle"]>span { 
+        &~nav {
+          clip-path: polygon( /* With clip-path: none, the animation suffers */
+            0 0,
+            100% 0,
+            100% 100%,    
+            0 100%,
+            0 0
+          );
+        }
+
+        &~label[for="navbar_toggle"] {
+          transform: translateX(200px);
+          transition-delay: 0s; /* Matching the navbar delays */
+
+          &>span { 
           /*
           &:nth-child(1) {
             transform: translate(8px, 2px) rotate(45deg);
@@ -545,30 +593,37 @@ body {
             transform: translate(-8px, -2px) rotate(45deg); 
           }
           */
-        }
-
-        &~nav {
-          width: 320px;
+          }
         }
       }
       
       &>nav {
-        width: 96px;
+        width: 392px;
         height: 100vh; /* Fallback */
         height: 100lvh;
-        transition-property: width;
-    
+        box-shadow: none; /* We shall use drop-shadow filter instead, it renders after clipping */
+        transition-property: clip-path; /* Transition on clip-path, instead of scaleY */;
+        clip-path: polygon( 
+          0 0,
+          192px 0,
+          192px 88px, 
+          0 25%,
+          0 0
+        );
+
         &>img.logo {
           width: 80px;
           height: 80px;
-          margin: 8px 0 8px 8px;
+          margin: 8px 0 0 8px;
         }
       }
     
+      /* TRANSITION SCALE(X OR Y), NOT WIDTH ON NAV */
       &>label[for="navbar_toggle"] {
-        &>span { 
-          background-color: black;
-        }
+        top: 22px;
+        left: 136px;
+        transition: transform 1s ease; /* To match the expansion of the navbar */
+        transition-delay: 200ms; /* Match the delay of the navbar, when it is retracting */
       }
 
       &>section.hero>div {
@@ -582,11 +637,6 @@ body {
           0 100%
         );
       }
-    }
-
-    &>main,
-    &>footer {
-      margin-left: 96px;
     }
 
     &>footer {
