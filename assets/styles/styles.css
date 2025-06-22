@@ -21,7 +21,7 @@
     height: 1px;
     overflow: hidden;
     clip: rect(0 0 0 0); /* Derpecated and substituted with clip-path, but more widespread with old browsers and screen readers */
-    white-space: no-wrap; /* Not enlarging the height */
+    white-space: nowrap; /* Not enlarging the height */
     border: 0;
   }
 }
@@ -46,11 +46,21 @@ body {
       font-style: normal;
     }
     
-    &>input#navbar_toggle:checked {
+    &>input#navbar-toggle:checked {
       &~nav {
         transition-delay: 0s; /* Not plain 0 for values of time */
         overflow: hidden auto;
-        transform: scaleY(1);
+        clip-path: polygon( /* Match the points one-to-one for optimal transition */
+          0 0,
+          100% 0,
+          100% 100%,
+          calc(100% - 96px) 100%,
+          96px 100%,
+          0 100%,
+          0 0
+        );
+        pointer-events: auto;
+        user-select: auto;
 
         &>a,
         &>label.dropdown { /* Immediate descendants only */
@@ -61,19 +71,19 @@ body {
         }
       }
 
-      &~label[for="navbar_toggle"] {
+      &~label[for="navbar-toggle"] {
         /* The hamburger button animation */
         &>span {
         background-color: red;
     
           &:nth-child(1) {
             transform-origin: top left;
-            transform: translate(8px, 2px) rotate(45deg); /* Translate first, other wise the transform-origin skewes the translation after rotation */
+            transform: translate(4px, 1px) rotate(45deg); /* Translate first, other wise the transform-origin skewes the translation after rotation */
           }
 
           &:nth-child(2) {
             transform-origin: top right;
-            transform: translate(-8px, 2px) rotate(-45deg); 
+            transform: translate(-4px, 1px) rotate(-45deg); 
           }
           
           /* Central blocks move out and become invisible */
@@ -89,12 +99,12 @@ body {
 
           &:nth-child(5) {
             transform-origin: bottom left;
-            transform: translate(8px, -2px) rotate(-45deg); 
+            transform: translate(4px, -1px) rotate(-45deg); 
           }
 
           &:nth-child(6) {
             transform-origin: bottom right;
-            transform: translate(-8px, -2px) rotate(45deg); 
+            transform: translate(-4px, -1px) rotate(45deg); 
           }
         }
       }
@@ -105,33 +115,49 @@ body {
       top: 0;
       left: 0;
       z-index: 1; /* Appear on top of the arrows in the schedule tables that are at z-index 0 */
-      padding-top: 64px; /* For the text to appear below the img.logo and the label */
       width: 100vw; /* Fallback */
       width: 100lvw;
       height: 100vh; /* Fallback */
       height: 100lvh; 
       overflow: hidden;
       background-color: var(--bg-primary);
-      transform-origin: top center;
-      transform: scaleY(calc(64px / 100vh)); /* Fallback, drop the height at around 64px */
-      transform: scaleY(0.064);
-      /* Transition on GPU-accelerated scaleY instead of CPU-intensive height that causes document reflow */
-      transition: transform 1s ease;
+      /* Navbar behavior when it is inert*/
+      pointer-events: none;
+      user-select: none;
+      /* Transition on GPU-accelerated clip-path instead of CPU-intensive height that causes document reflow */
+      transition: clip-path 1s ease;
       transition-delay: 100ms; /* When navbar is unchecked, wait for the text to fade out */
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 72px,
+        calc(100% - 72px) 20px,
+        96px 20px,
+        0 96px,
+        0 0
+      );
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
 
       &>* {
-        flex-shrink: 0; /* The flex items won't get squished (scootched) on overflows */
+        flex-shrink: 0; /* The flex items (direct nav children) won't get squished (scootched) on overflows */
       }
 
-      /* Pointer behavior when the navbar is retracted */
-      &.inert {
+      &>img.logo {
+        align-self: flex-start;
+        margin: 8px 0 0 8px;
+        width: 48px;
+        height: auto;
+      }
+
+      /* Navbar behavior when it is expaned
+      &.expaned {
         pointer-events: none;
         user-select: none;
       }
+      */
 
       & input:checked+label.dropdown { /* Only the immediate sibling label */
         &>span.destination::after {
@@ -169,7 +195,7 @@ body {
 
         &:hover,
         &:focus,
-        &:focus-visible { It abolishes moot focus, fallback is focus 
+        &:focus-visible { /* It abolishes moot focus, fallback is focus */
           border: 2px solid black;
         }
       }
@@ -200,31 +226,20 @@ body {
       } 
     }
 
-    &>img.logo,
-    &>label[for="navbar_toggle"] {
+    &>label[for="navbar-toggle"] {
       position: fixed;
       z-index: 1; /* At the same level as the navbar */
-    }
-
-    &>img.logo {
-      top: 8px;
-      left: 8px;
-      width: 48px;
-      height: auto;
-    }
-
-    &>label[for="navbar_toggle"] {
-      top: 12px;
-      right: 12px;
-      width: 40px;
-      height: 40px;
+      top: 16px;
+      right: 16px;
+      width: 20px;
+      height: 20px;
       display: grid;
       grid-template-columns: repeat(2 , 1fr);
       grid-template-rows: repeat(3, 2fr);
-      row-gap: 8px;
+      row-gap: 4px;
 
       &>span {
-        height: 8px;
+        height: 4px;
         transition: all 300ms ease-in-out; /* The animation is suffering if only transform, opacity and bg-color are listed */
         background-color: white;
 
@@ -241,64 +256,73 @@ body {
     }
    
     &>section.hero {
-      margin-top: 64px;
+      height: 100vh;
+      height: 100lvh;
+      background: url('../images/hero.jpg') center/cover no-repeat;
 
-      &>img { /* The hero image */
-        display: block;
+      &>span.slogan {
         width: 100vw;
-        height: auto;
-        object-fit: cover;
-      }
-
-      &>div {
-        width: 100vw;
-        margin-top: -48px;
-        aspect-ratio: 16 / 1; /* Keep the height proportional */
+        width: 100lvw;
+        height: 80px;
+        transform: translateY(calc(100vh - 80px));
+        transform: translateY(calc(100lvh - 80px));
         display: flex;
-        justify-conter: center;
+        justify-content: center;
         align-items: center;
         background-color: rebeccapurple;
-        clip-path: polygon( 
-          0 0,
-          45% 0,
-          50% 15%,     /* triangle tip */
-          55% 0,
-          100% 0,
-          100% 100%,
-          0 100%
-        );
-        position: relative; /* Needed for creating the stacking context with the z-index */
-        z-index: -1; /* Since clip-path creates a stacking context it should appear bellow the navbar */
-
-        &>span.slogan {
-          color: white;
-          font-size: 20px;
-          font-weight: bold;
-          text-shadow: var(--banner-shadow);
-          text-align: center;
-        }
+        border-radius: 32px 0 32px 0;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        text-shadow: var(--banner-shadow);
+        text-align: center;
       }
     }
   } 
        
   &>main {
-    min-height: 200vh;
-    padding: 64px;
+    padding: 10vh 10vw;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     row-gap: 64px;
 
+    &>section.submissions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 64px;
+
+      &>img {
+        width: 30vw;
+        height: auto;
+        object-fit: fill;
+        box-shadow: 0 0 8px #333;
+      }
+
+      &>div.submissions-wrapper {
+        width: 30vw;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        row-gap: 2rem;
+        text-align: center;
+      }
+    }
+
     &>section.schedules {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 32px;
+      gap: 64px;
   
       &>figure.schedule {
         width: 384px;
-        height: 768px;
+        height: auto;
+        padding-bottom: 64px;
         font-size: 20px;
         /* filter: drop-shadow(0 2px 4px #333); It creates a stacking context*/
         box-shadow: 0 0 8px #333;
@@ -351,7 +375,7 @@ body {
  
           &>div {
             display: flex; /* Center each section's text, which lies within a span element, not a raw text node */
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             color: white;
       
@@ -367,6 +391,7 @@ body {
               grid-area: grade;
               font-size: 28px;
               padding: 4px 0;
+              font-weight: bold;
    
               &>span.grade-index {
                 padding: 2px 8px;
@@ -377,6 +402,7 @@ body {
 
             &.field-name {
               grid-area: field-name;
+              padding-left: 8px;
               background-image: var(--purple-grad);
               color: white;
               font-style: oblique;
@@ -467,7 +493,7 @@ body {
 
           &:hover {
             color: white;
-            background-color: gray; 
+            background-color: rebeccapurple; 
             box-shadow: 0 2px 4px black;
           }
         }
@@ -560,7 +586,7 @@ body {
 @media only screen and (min-width: 768px) {
   body {
     &>header { 
-      &>input#navbar_toggle:checked {
+      &>input#navbar-toggle:checked {
         &~nav {
           clip-path: polygon( /* With clip-path: none, the animation suffers */
             0 0,
@@ -571,28 +597,25 @@ body {
           );
         }
 
-        &~label[for="navbar_toggle"] {
-          transform: translateX(200px);
-          transition-delay: 0s; /* Matching the navbar delays */
+        &~label[for="navbar-toggle"] {
+          transform: translateX(256px);
 
           &>span { 
-          /*
-          &:nth-child(1) {
-            transform: translate(8px, 2px) rotate(45deg);
-          }
+            &:nth-child(1) {
+              transform: translate(8px, 2px) rotate(45deg);
+            }
 
-          &:nth-child(2) {
-            transform: translate(-8px, 2px) rotate(-45deg); 
-          }
+            &:nth-child(2) {
+              transform: translate(-8px, 2px) rotate(-45deg); 
+            }
 
-          &:nth-child(5) {
-            transform: translate(8px, -2px) rotate(-45deg); 
-          }
+            &:nth-child(5) {
+              transform: translate(8px, -2px) rotate(-45deg); 
+            }
 
-          &:nth-child(6) {
-            transform: translate(-8px, -2px) rotate(45deg); 
-          }
-          */
+            &:nth-child(6) {
+              transform: translate(-8px, -2px) rotate(45deg); 
+            }
           }
         }
       }
@@ -618,25 +641,19 @@ body {
         }
       }
     
-      /* TRANSITION SCALE(X OR Y), NOT WIDTH ON NAV */
-      &>label[for="navbar_toggle"] {
+      &>label[for="navbar-toggle"] {
         top: 22px;
         left: 136px;
+        width: 40px;
+        height: 40px;
+        row-gap: 8px;
         transition: transform 1s ease; /* To match the expansion of the navbar */
-        transition-delay: 200ms; /* Match the delay of the navbar, when it is retracting */
-      }
-
-      &>section.hero>div {
-        clip-path: polygon( 
-          0 0,
-          48% 0,
-          50% 15%,     /* triangle tip */
-          52% 0,
-          100% 0,
-          100% 100%,
-          0 100%
-        );
-      }
+        background-color: #333;
+      
+        &>span {
+          height: 8px;
+        }
+      } 
     }
 
     &>footer {
