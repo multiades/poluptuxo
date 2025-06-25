@@ -9,6 +9,23 @@
   <body>
     <header>
       <input type="checkbox" id="navbar-toggle" autocomplete="off" hidden unchecked>
+
+      <label for="navbar-toggle" 
+                 tabindex="0" 
+                 aria-label="Είσοδος - έξοδος από την πλοήγηση" 
+                 aria-controls="navbar" 
+                 aria-expanded="false" 
+                 role="button" 
+                 autocomplete="off">
+        <!-- Hamburger icon's individual line halves, 2 per line -->
+        <span></span> 
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
       <!-- Screen readers can't access the navbar initially, need the ID for the toggle's aria-controls attribute -->      
       <nav id="navbar" aria-hidden="true" >
         <img src="./assets/images/owl.svg" class="logo" aria-hidden="true"> 
@@ -24,7 +41,7 @@
           <span class="destination">Το φροντιστήριο</span>
         </label>
         <ul>
-          <li><a href="#">Εγκαταστάσεις</a></li>
+          <li><a href="./study/infastructure.html">Εγκαταστάσεις</a></li>
           <li><a href="#">Αναγνωστήριο</a></li>
         </ul>
 
@@ -70,39 +87,20 @@
           </li>
         </ul>
 
-        <a href="#">
+        <a href="./contact.html">
           <span class="destination">Επικοινωνία</span>
         </a>
 
-        <div id="trap" class="visually_hidden"></div> <!-- Trap focus to the navbar toggler -->
+        <div id="trap" class="visually-hidden"></div> <!-- Trap focus to the navbar toggler -->
       </nav>
-      <!-- Label after the navbar in order to appear on top of it -->
-      <label for="navbar-toggle" 
-                 tabindex="0" 
-                 aria-label="Είσοδος - έξοδος από την πλοήγηση" 
-                 aria-controls="navbar" 
-                 aria-expanded="false" 
-                 role="button" 
-                 autocomplete="off">
-        <!-- Hamburger icon's individual line halves, 2 per line -->
-        <span></span> 
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
 
-      <section class="hero">
-        <span class="slogan">Αρωγός στην προσπάθεια του μαθητή</span>
-      </section> <!-- End of section.hero -->
+      <span class="slogan">Αρωγός στην προσπάθεια του μαθητή</span>
     </header>
 
     <main>
 
       <section class="submissions">
-        <img src="./assets/images/submissions.jpg" alt="Οι εγγραφές άρχισαν">
-        <div class="submissions-wrapper">
+        <div class="submissions-text">
           <h2>Εγγραφές</h2>
           <p>
             Οι εγγραφές στο Φροντιστήριο Μέσης Εκπαίδευσης Πολύπτυχο για τα θερινά
@@ -114,8 +112,16 @@
             του φροντιστηρίου στο τηλέφωνο 210-8848188 καθημερινά από τις 13:00 έως
             τις 21:00.
           </p>
-        </div> <!-- End of div.wrapper -->
+        </div> <!-- End of div.submissions-text-->
       </section> <!-- End of section.submissions -->
+
+      <article class="success-guide"> <!-- Can standalone in an RSS feed -->
+        <h2>Οδηγός επιτυχίας</h2>
+        <p>
+          Το Φροντιστήριο Μέσης Εκπαίδευσης Πολύπτυχο αποτελεί έναν σύγχρονο χώρο εκπαίδευσης, ο οποίος δημιουργήθηκε με σκοπό την κάλυψη των πραγματικών αναγκών των μαθητών του γυμνασίου και του λυκείου. Στο φροντιστήριο μας πρωταρχικός στόχος είναι η ολόπλευρη κι εις βάθος εκμάθηση των επιστημονικών αντικειμένων που αφορούν τα σχολικά μαθήματα.
+          Είμαστε σίγουροι δε ότι μόνο αυτή η αντιμετώπιση της διδακτέας ύλης μπορεί να δώσει τη δυνατότητα στα παιδιά να αγαπήσουν πραγματικά τα μαθήματα τους και να τα φέρει σε θέση ικανή να διαβούν το κατώφλι του Πανεπιστημίου.
+        </p>
+      </article> <!-- End of article.success-guide -->
 
     </main>
 
