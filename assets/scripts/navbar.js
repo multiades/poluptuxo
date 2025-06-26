@@ -35,20 +35,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // Function that transitions the logo owl images
   function owlTrans(direction = 'forward') { // Why do I need to initialize the parameter here?
     if (direction === 'forward') {
+      owl2.style.opacity = '1'; // Fade in owl2 immediatelly to avoid flicker
       owl1.style.opacity = '0';
-      owl2.style.opacity = '1';
 
       setTimeout(() => {
-        owl2.style.opacity = '0';
         owl3.style.opacity = '1';
+        owl2.style.opacity = '0';
       }, 300); // In ms
     } else {
-      owl3.style.opacity = '0';
       owl2.style.opacity = '1';
+      owl3.style.opacity = '0';     
 
       setTimeout(() => {
-        owl2.style.opacity = '0';
         owl1.style.opacity = '1';
+        owl2.style.opacity = '0';
       }, 300); // In ms
     }
   }
