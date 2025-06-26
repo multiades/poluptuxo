@@ -1,4 +1,4 @@
-	* {
+        * {
 	  box-sizing: border-box;
 	  margin: 0;
 	  padding: 0;
@@ -47,9 +47,9 @@
 
 	  &>header {
             width: 100vw; /* Including the scrollbar */
-            width: 100lvw;
+            width: 100dvw;
             height: 100vh; /* Fallback */
-            height: 100lvh;
+            height: 100dvh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -166,6 +166,7 @@
 	      width: 100%; 
 	      height: 100%;
 	      overflow: hidden;
+              padding-top: 160px;
 	      background-color: var(--nav-bg-first);
 	      /* Navbar behavior when it is inert*/
 	      pointer-events: none;
@@ -201,18 +202,15 @@
 		&:focus,
 		&:focus-visible, /* It abolishes moot focus, fallback is focus */
                 &:active {
-		  color: var(--nav-secondary);
+		  background-color: rebeccapurple;
 		}
-
-                &:hover,
-                &:active {
-                  outline: 1px solid var(--nav-secondary); /* Different from the focus one  */
-                  /* 
+                
+                /*
+                  outline: 1px solid var(--nav-secondary);Different from the focus one
                   Mimicking the outer-ring of tabbed focus, can't have double outline
                   and border affects the layout 
-                  */   
-                  box-shadow: 0 0 0 1.5px white; /* The fourth parameter is spead radius */
-                }
+                  box-shadow: 0 0 0 1.5px white; The fourth parameter is spead radius
+                */   
 	      }
 
 	      & label.dropdown {
@@ -223,27 +221,18 @@
                   width: 1.25rem;
                   height: 1.25rem;
                   clip-path: polygon(
-                    0 20%,
-                    15% 20%,
-                    50% 65%,
-                    85% 20%,
-                    100% 20%,
-                    100% 35%,
+                    0 25%,
+                    15% 25%,
+                    50% 64.2%, /* Pythagorean theorem */
+                    85% 25%,
+                    100% 25%,
+                    100% 40%,
                     50% 80%, 
-                    0 35%,
-                    0 20%
+                    0 40%,
+                    0 25%
                   );  
                   margin-left: 1rem;
 	        }
-
-		&:hover,
-		&:focus,
-		&:focus-visible,
-                &:active {
-                  &::after {
-		    background-color: var(--nav-secondary);
-		  }
-                }
 	 
 		&+ul {
 		  display: none;
@@ -255,10 +244,17 @@
 	      }
 
 	      &>img.logo {
-		align-self: flex-start;
-		margin: 8px 0 0 8px;
+                position: absolute;
+		top: 8px;
+                left: 8px;
 		width: 48px;
 		height: 48px;
+                opacity: 0;
+                transition: opacity 300ms ease;
+
+                &.asleep {
+                  opacity: 1;
+                }
 	      }
 
               /* Only the immediate sibling labels of the hidden inputs*/
@@ -307,9 +303,10 @@
 
             &>h1 {
               color: white; 
+              gont-size: 1.5rem;
               font-weight: bold;
               text-shadow: 0 0 8px black;
-              padding: 0 0.5rem;
+              padding: 0 1.5rem;
             }
 
 	    &>span.slogan {
@@ -318,12 +315,12 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background-color: rebeccapurple;
+		background-color: #96f;
 		clip-path: polygon(
                   0 0,
-                  45% 0,
+                  47% 0,
                   50% 20%,
-                  55% 0,
+                  53% 0,
                   100% 0,
                   100% 100%,
                   0 100%,
@@ -352,6 +349,10 @@
               background-image: linear-gradient(to top, lightgreen 30%, transparent 30%);
             }
 
+            & p {
+              line-height: 1.5;
+            }
+
 	    &>section, 
             &>article {
               display: flex;
@@ -369,7 +370,9 @@
                   width: clamp(256px, 80vw, 512px);
                   height: clamp(130.5px, calc(80vw * 522 / 1024), 261px);
                   background: url('../images/submissions.jpg') center/cover no-repeat;
-		  box-shadow: var(--basic-box-shadow);
+		  box-shadow: 
+                    0 0 0 8px white,
+                    0 0 8px 8px #333;
 	        }
 
 	        &>div.submissions-text {
@@ -587,7 +590,7 @@
 	  }
 
 	  &>footer {
-	    background-color: gray;
+	    background-color: #96f;
             padding: 16px;
 	    color: white;
 	    display: grid;
@@ -622,9 +625,9 @@
                 
                 &:hover,
                 &:focus,
-                &:focus-visible {
-                  text-decoration: underline;
-                  color: rebeccapurple;
+                &:focus-visible,
+                &:active {
+                  color: white;
                 }
 	      }
 
@@ -717,15 +720,14 @@
 
 	      &>nav {
 		width: 392px;
-		height: 100vh; /* Fallback */
-		height: 100lvh;
+		height: 100%;
                 transition-delay: 200ms;
 		box-shadow: none; /* We shall use drop-shadow filter instead, it renders after clipping */
 		clip-path: polygon( 
 		  0 0,
 		  192px 0,
 		  192px 88px, 
-		  0 25%,
+		  0 288px,
 		  0 0
 		);
 
@@ -736,7 +738,7 @@
 		}
 	      }
 
-              &>section.hero>span.slogan {
+              &>span.slogan {
 		clip-path: polygon(
                   0 0,
                   48% 0,
@@ -760,26 +762,31 @@
 	  }
 	}
 
-	/* Second breakpoint (for footer only) */
+	/* Second breakpoint */
 	@media only screen and (min-width: 1200px) {
 	  body {
+            &>header>span.slogan {
+              clip-path: polygon(
+                0 0,
+                49% 0,
+                50% 20%,
+                51% 0,
+                100% 0,
+                100% 100%,
+                0 100%,
+                0 0
+              );
+            }
+
 	    &>footer {
 	      grid-template-areas: "one two logo three four";
 	      grid-template-columns: repeat(5, 1fr);
 	    }
 	  }
 	}
+
 	/*
 	Coarse pointer is not precise, touch 
 	@media only screen and (hover: none) {
-	  body {
-	    &>header {
-	      &>nav {
-		top: 0;
-		width: 100vw;
-		height: 64px;
-	      }
-	    }
-	  }
 	}
 	*/
