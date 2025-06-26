@@ -31,37 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }); 
     }
   }
-  
-  // Function that transitions the logo owl images
-  function owlTrans(direction = 'forward') { // Why do I need to initialize the parameter here?
-    if (direction === 'forward') {
-      owl2.style.opacity = '1'; // Fade in owl2 immediatelly to avoid flicker
-      owl1.style.opacity = '0';
-
-      setTimeout(() => {
-        owl3.style.opacity = '1';
-        owl2.style.opacity = '0';
-      }, 300); // In ms
-    } else {
-      owl2.style.opacity = '1';
-      owl3.style.opacity = '0';     
-
-      setTimeout(() => {
-        owl1.style.opacity = '1';
-        owl2.style.opacity = '0';
-      }, 300); // In ms
-    }
-  }
 
   // Initial run
   navInter();
 
   // Re-run on navbar toggle
-  toggler.addEventListener('change', () => {
-    const direction = toggler.checked ? 'forward' : 'reverse';
-    owlTrans(direction);
-    navInter();
-  });
+  toggler.addEventListener('change', navInter);
 
   // Use a visually hidden div trap to focus on the navbar toggler again at the end of the navbar for accessibility purposes
   navbar.querySelector('div#trap').addEventListener('focus', () => {
