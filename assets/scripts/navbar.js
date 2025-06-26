@@ -1,10 +1,13 @@
 // Wait until all HTML elements are fully parsed, is not necessary if the script is at the end of the html's body but it does not add overhead and it future-proofs the script.
 document.addEventListener('DOMContentLoaded', () => { 
-  const toggler = document.querySelector('input#navbar_toggle'); // The navbar's toggle hidden checkbox
-  const navbar = document.querySelector('nav#navbar'); 
+  const toggler = document.querySelector('input#navbar-toggle'); // The navbar's toggle hidden checkbox
+  const navbar = document.querySelector('nav#navbar');
+  const owl1 = document.querySelector('img.logo.asleep'); 
+  const owl2 = document.querySelector('img.logo.inbetween'); 
+  const owl3 = document.querySelector('img.logo.wake'); 
 
   // Function that renders the navbar non-interactive when it is not expanded
-  function navInteractivity () { 
+  function navInter() { 
     const isExpanded = toggler.checked;
 
     // Block pointer interaction when collapsed
@@ -28,41 +31,40 @@ document.addEventListener('DOMContentLoaded', () => {
       }); 
     }
   }
+  
+  // Function that transitions the logo owl images
+  function owlTrans(direction = 'forward') { // Why do I need to initialize the parameter here?
+    if (direction === 'forward') {
+      owl1.style.opacity = '0';
+      owl2.style.opacity = '1';
 
-  // Function that scales the navbar properly
-  function navScale {
-    const fullH = navbar.offsetHeight || window.innerHeight;
-    const collapsedH = 64;
-    const scale = collapsedH / fullH
+      setTimeout(() => {
+        owl2.style.opacity = '0';
+        owl3.style.opacity = '1';
+      }, 300); // In ms
+    } else {
+      owl3.style.opacity = '0';
+      owl2.style.opacity = '1';
 
-    
+      setTimeout(() => {
+        owl2.style.opacity = '0';
+        owl1.style.opacity = '1';
+      }, 300); // In ms
+    }
+  }
+
   // Initial run
-  navInteractivity();
+  navInter();
 
-  // Re-run on toggle
-  toggler.addEventListener('change', navInteractivity);
+  // Re-run on navbar toggle
+  toggler.addEventListener('change', () => {
+    const direction = toggler.checked ? 'forward' : 'reverse';
+    owlTrans(direction);
+    navInter();
+  });
 
   // Use a visually hidden div trap to focus on the navbar toggler again at the end of the navbar for accessibility purposes
   navbar.querySelector('div#trap').addEventListener('focus', () => {
-    document.querySelector('label[for="navbar_toggle"]').focus();
+    document.querySelector('label[for="navbar-toggle"]').focus();
   });
 });
-
-/*
-
-  Select all anchors and dropdown labels in the nav element
-  const nodes = document.querySelectorAll('nav a', 'nav label.dropdown');
-
-  function updateState() {
-    const expanded = toggle.checked;
-    links.forEach
-  
-  if (!navbar) return; // Exits the script if navbar does not exist
-sidebar.addEventListener('mouseleave', () => {
-  const checkboxes = navbar.querySelectorAll('input[type="checkbox"]');
-  
-  checkboxes.forEach(checkbox => {
-    checkbox.checked = false;
-  });
-});
-*/
