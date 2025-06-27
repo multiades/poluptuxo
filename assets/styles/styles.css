@@ -47,9 +47,9 @@
 
 	  &>header {
             width: 100vw; /* Including the scrollbar */
-            width: 100dvw;
+            width: 100svw;
             height: 100vh; /* Fallback */
-            height: 100dvh;
+            height: 100svh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -189,7 +189,7 @@
 	      left: 0;
 	      z-index: 1; /* Appear on top of the arrows in the schedule tables that are at z-index 0 */
 	      width: 100%; 
-	      height: 100dvh;
+	      height: 100%;
 	      overflow: hidden;
 	      background-color: var(--nav-bg-first);
 	      /* Navbar behavior when it is inert*/
