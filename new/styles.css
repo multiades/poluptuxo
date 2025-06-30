@@ -1,0 +1,854 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  /* Custom CSS properties */
+  &:root {
+    --nav-primary: white;
+    --nav-secondary: #9933ff;
+    --nav-bg-first: #333;
+    --nav-bg-second: #999;
+    --nav-bg-third: #ccc;
+    --main-bg: #ffc;
+    --coral-grad: linear-gradient(135deg, #EF7874 0%, #EC635D 100%);
+    --purple-grad: linear-gradient(135deg, #9C4B9A 0%, #A971AD 100%);
+    --yellow-grad: linear-gradient(135deg, #FCC048 0%, #FDBD41 100%);
+    --basic-box-shadow: 0 0 8px #333;
+  }
+
+  &.visually-hidden {
+    width: 1px; /* Ensure that screen readers acknowledge it */
+    height: 1px;
+    overflow: hidden;
+    clip-path: polygon(0 0, 0 0);
+  }
+
+  & *.inert {
+    pointer-events: none; /* No interaction with the pointer */
+    user-select: none; /* Can't selects text in any way, even with keyboard or scripts */
+    touch-action: none; /* Blocks interaction with crude pointers */
+  }	
+}
+
+body {
+  font-size: medium;
+  overflow-x: hidden;
+
+  & a,
+  & label[for],
+  & button {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+	    
+  & a {
+    font-style: normal;
+    text-decoration: none;  
+  } 
+ 
+  &>header {
+    width: 100vw; /* Including the scrollbar, fallback */
+    width: 100svw;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    background: url('../images/hero.jpg') center / cover no-repeat;
+	    
+    &>input#navbar-toggler:checked {
+      &~nav {
+        transition-delay: 0s; /* Not plain 0 for values of time */
+        overflow: hidden auto;
+	clip-path: polygon( /* Match the points one-to-one for optimal transition */
+          0 0,
+          100% 0,
+          100% 100%,
+          calc(100% - 96px) 100%,
+          96px 100%,
+          0 100%,
+          0 0
+        );
+                
+        &>svg.logo>g {
+          /* Lower sectors of the eyes, for half-open eyes */
+          &>path.cls-2-2-layer2,
+          &>path.cls-4-2-layer2,
+          &>path.cls-7-2-layer2,
+          &>path.cls-8-2-layer2,
+          &>path.cls-9-2-layer2,
+          &>path.cls-11-2-layer2 {
+            transition-delay: 0s;
+            opacity: 0;
+          }
+
+          /* Upper sectors of the eyes, for half-open eyes */
+          &>path.cls-2-1-layer2,
+                  &>path.cls-4-1-layer2,
+                  &>circle.cls-eyeGloss-layer2,
+                  &>path.cls-7-1-layer2,
+                  &>path.cls-8-1-layer2,
+                  &>path.cls-9-1-layer2,
+                  &>path.cls-11-1-layer2 {
+                    transition-delay: 400ms;
+                    opacity: 0;
+                  }
+                }
+
+	        &>label[for="navbar-toggler"] {
+                  /* The hamburger button animation */
+		  &>span {
+		    background-color: red;
+	    
+		    &:nth-child(1) {
+		      transform-origin: top left;
+		      transform: translate(6px, 1.5px) rotate(45deg); /* Translate first, other wise the transform-origin skewes the translation after rotation */
+		    }
+
+		    &:nth-child(2) {
+		      transform-origin: top right;
+		      transform: translate(-6px, 1.5px) rotate(-45deg); 
+		    }
+		  
+		    /* Central blocks move out and become invisible */
+		    &:nth-child(3) {
+		      transform: translateX(-16px);
+		      opacity: 0;
+		    }
+
+		    &:nth-child(4) {
+		      transform: translateX(16px);
+		      opacity: 0;
+		    }
+
+		    &:nth-child(5) {
+		      transform-origin: bottom left;
+		      transform: translate(6px, -1.5px) rotate(-45deg); 
+		    }
+
+		    &:nth-child(6) {
+		      transform-origin: bottom right;
+		      transform: translate(-6px, -1.5px) rotate(45deg); 
+		    }
+		  }
+	        }
+  
+                /* Immediate link descendants only */
+		&>a,
+		&>label.dropdown { 
+		  &>span.destination {
+		    opacity: 1;
+		    transition-delay: 800ms; /* 800ms delay on the transition, waiting for the navbar to fully expand */
+		  }
+		}
+
+                /* Can't target ::after pseudoelements with &>*, even though it appears as a child */
+                &>label.dropdown::after {
+                  opacity: 1;
+		  transition-delay: 800ms; 
+                }
+	      }
+	    }
+
+	    &>nav {
+	      position: fixed; /* Create a stacking context */
+	      top: 0;
+	      left: 0;
+	      z-index: 1; /* Appear on top of the arrows in the schedule tables that are at z-index 0 */
+	      width: 100%; 
+	      height: 100%;
+	      overflow: hidden;
+	      background-color: var(--nav-bg-first);
+	      /* Transition on GPU-accelerated clip-path instead of CPU-intensive height that causes document reflow */
+	      transition: clip-path 800ms ease-in-out;
+	      transition-delay: 200ms; /* When navbar is unchecked, wait for the text to fade out (100ms) and 100ms extra */
+	      clip-path: polygon(
+		0 0,
+		100% 0,
+		100% 96px,
+		calc(100% - 96px) 20px,
+		96px 20px,
+		0 96px,
+		0 0
+	      );
+	      display: flex;
+	      flex-direction: column;
+	      justify-content: flex-start;
+	      align-items: center;
+
+	      & a,
+	      & label.dropdown {
+		width: 100%; /* Not by default, no block level elements */
+		height: 4rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: var(--nav-primary);
+                font-size: 1.25rem;
+
+		&:hover,
+		&:focus,
+		&:focus-visible, /* It abolishes moot focus, fallback is focus */
+                &:active {
+		  background-color: rebeccapurple;
+		}
+                
+                /*
+                  outline: 1px solid var(--nav-secondary);Different from the focus one
+                  Mimicking the outer-ring of tabbed focus, can't have double outline
+                  and border affects the layout 
+                  box-shadow: 0 0 0 1.5px white; The fourth parameter is spead radius
+                */   
+	      }
+
+	      & label.dropdown {
+		&::after {
+		  content: '';
+                  background-color: var(--nav-primary);
+                  display: inline-block; /* To respect transition and size*/
+                  width: 1.25rem;
+                  height: 1.25rem;
+                  clip-path: polygon(
+                    0 25%,
+                    15% 25%,
+                    50% 64.2%, /* Pythagorean theorem */
+                    85% 25%,
+                    100% 25%,
+                    100% 40%,
+                    50% 80%, 
+                    0 40%,
+                    0 25%
+                  );  
+                  margin-left: 1rem;
+	        }
+	 
+		&+ul {
+		  display: none;
+		}
+	      }
+
+	      &>* {
+		flex-shrink: 0; /* The flex items (direct nav children) won't get squished (scootched) on overflows */
+	      }
+
+	      &>svg.logo {
+                align-self: flex-start;
+                width: 48px;
+                height: 48px;
+                margin: 8px 0 0 8px;
+
+                &>g {
+                  &>path.cls-2-2-layer2,
+                  &>path.cls-4-2-layer2,
+                  &>path.cls-7-2-layer2,
+                  &>path.cls-8-2-layer2,
+                  &>path.cls-9-2-layer2,
+                  &>path.cls-11-2-layer2,
+                  &>path.cls-2-1-layer2,
+                  &>path.cls-4-1-layer2,
+                  &>circle.cls-eyeGloss-layer2,
+                  &>path.cls-7-1-layer2,
+                  &>path.cls-8-1-layer2,
+                  &>path.cls-9-1-layer2,
+                  &>path.cls-11-1-layer2 {
+                    transition: opacity 400ms ease-in-out;
+                    opacity: 1;
+                  }
+
+                  /* Upper eye semicircle */
+                  &>path.cls-2-1-layer2,
+                  &>path.cls-4-1-layer2,
+                  &>circle.cls-eyeGloss-layer2,
+                  &>path.cls-7-1-layer2,
+                  &>path.cls-8-1-layer2,
+                  &>path.cls-9-1-layer2,
+                  &>path.cls-11-1-layer2 {
+                    transition-delay: 200ms; /* Waiting for text to fade out */
+                  }
+
+                  /* Lower eye semicircle */
+                  &>path.cls-2-2-layer2,
+                  &>path.cls-4-2-layer2,
+                  &>path.cls-7-2-layer2,
+                  &>path.cls-8-2-layer2,
+                  &>path.cls-9-2-layer2,
+                  &>path.cls-11-2-layer2 {
+                    transition-delay: 600ms; /* Navbar half-closed, 200ms + 400ms */
+                  }
+                }
+              }
+
+	      &>label[for="navbar-toggler"] {
+                position: absolute;
+                top: 16px;
+                right: 16px;
+	        width: 30px;
+	        height: 30px;
+	        display: grid;
+	        grid-template-columns: repeat(2 , 1fr);
+	        grid-template-rows: repeat(3, 2fr);
+	        row-gap: 6px;
+
+	        &>span {
+		  height: 6px;
+		  transition: all 400ms ease-in-out; /* The animation is suffering if only transform, opacity and bg-color are listed */
+		  background-color: white;
+
+		  /* Line halves 1, 3, 5 */
+		  &:nth-child(odd) {
+		    border-radius: 16px 0 0 16px; /* Rounded border only on the left side */
+		  }
+
+		  /* Lines 2, 4, 6 */
+		  &:nth-child(even) {
+		    border-radius: 0 16px 16px 0; /* Rounded border only on the right side */
+		  }
+	        }
+	      }
+
+              /* Only the immediate sibling labels of the hidden inputs*/
+	      & input:checked+label.dropdown { 
+		&::after {
+		  transform: rotateX(180deg);
+		}
+
+		&+ul { /* Only the immediate sibling */
+		  width: 100%; /* Not by default */
+		  display: flex;
+		  flex-direction: column;
+		  justify-content: flex-start;
+		  align-items: center;
+		  background-color: var(--nav-bg-second);
+		  list-style: none; 
+
+		  &>li {
+		    width: 100%; /* Not by default */
+		    flex-shrink: 0;
+		    
+		    &>label.dropdown+ul { /* Submenus of depth 2 */
+		      background-color: var(--nav-bg-third); 
+		    }
+		  }
+		}   
+	      }
+
+	      &>a,
+	      &>label.dropdown {
+		&>span.destination {
+		  opacity: 0;
+		  overflow: hidden;
+		  transition: opacity 100ms ease-in-out;
+		  transition-delay: 0s;
+		}
+              }
+ 
+              &>label.dropdown::after {
+	        opacity: 0;
+		overflow: hidden;
+		transition: opacity 100ms ease-in-out;
+		transition-delay: 0s;
+              }
+	    }
+
+            &>h1 {
+              color: white; 
+              gont-size: 1.5rem;
+              font-weight: bold;
+              text-shadow: 0 0 8px black;
+              padding: 0 1.5rem;
+            }
+
+	    &>span.slogan {
+		width: 100%;
+		height: 96px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #96f;
+		clip-path: polygon(
+                  0 0,
+                  47% 0,
+                  50% 20%,
+                  53% 0,
+                  100% 0,
+                  100% 100%,
+                  0 100%,
+                  0 0
+                );
+		color: white;
+		font-size: 1.25rem;
+		font-weight: bold;
+		text-shadow: var(--banner-shadow);
+		text-align: center;
+	    }
+	  } 
+	       
+	  &>main {
+	    padding: 10vh 10vw;
+            overflow: hidden;
+            background-color: var(--main-bg);
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: flex-start;
+	    align-items: center;
+	    row-gap: 4rem;
+
+            &.inert {
+              overflow: hidden;
+              pointer-events: none;
+              touch-action: none;
+              user-select: none;
+              position: relative;
+ 
+              &::before { // Visual overlay
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+              }
+            }
+
+            & h2 {
+              padding: 0 0.5rem;
+              background-image: linear-gradient(to top, lightgreen 30%, transparent 30%);
+            }
+
+            & p {
+              line-height: 1.5;
+            }
+
+	    &>section, 
+            &>article {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              align-items: center;
+              gap: 2rem;
+            }
+
+            &>section {
+              &.submissions {
+                &::before {
+                  content: '';
+                  display: inline-block;
+                  width: clamp(256px, 80vw, 512px);
+                  height: clamp(130.5px, calc(80vw * 522 / 1024), 261px);
+                  background: url('../images/submissions.jpg') center/cover no-repeat;
+		  box-shadow: 
+                    0 0 0 8px white,
+                    0 0 8px 8px #333;
+	        }
+
+	        &>div.submissions-text {
+		  display: flex;
+                  width: clamp(256px, 80vw, 512px);
+		  flex-direction: column;
+		  justify-content: flex-start;
+		  align-items: center;
+		  row-gap: 2rem;
+	        }
+	      }
+ 
+              &.infastructure {
+              }
+         
+              &.gallery {
+              }
+    
+              &.staff {
+              }
+
+	      &.schedules {
+                gap: 4rem;
+
+	        &>figure.schedule {
+		width: 384px;
+		height: auto;
+		padding-bottom: 64px;
+		font-size: 20px;
+                transform-origin: top center; /* For narrow screen sizes, JS scales it down */
+		/* filter: drop-shadow(0 2px 4px #333); It creates a stacking context*/
+		box-shadow: 0 0 8px #333;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		row-gap: 64px;
+		font-weight: 500; /* Only in hundreds */
+
+		&#humanities-social {
+		  background-image: var(--coral-grad);
+		}
+
+		&#natural {
+		  background-color: lightgreen;
+		}
+
+		&#medical {
+		  background-color: lightblue;
+		}
+	  
+		&#econ-informatics {
+		  background-color: gold;
+		}
+
+		&>figcaption {
+		  width: 100%;
+		  display: grid;
+		  grid-template-rows: 32px 48px 64px;
+		  grid-template-columns: 50% 50%;
+		  grid-template-areas: 
+		    "banner banner"
+		    "icons grade"
+		    "field-name field-label";
+		  row-gap: 16px;
+		  margin-top: -16px; /* Mainly for the banner, translating Y creates an undesired stacking context */
+		  margin-bottom: 16px;
+
+		  &>img {
+		    grid-area: icons;
+		    width: 48px;
+		    height: 48px;
+		    margin-left: 8px;
+
+		    &+img { /* If a second image exists */
+		      margin-left: 48px;
+		    }
+		  }
+	 
+		  &>div {
+		    display: flex; /* Center each section's text, which lies within a span element, not a raw text node */
+		    justify-content: flex-start;
+		    align-items: center;
+		    color: white;
+	      
+		    &.banner {
+		      grid-area: banner;
+		      margin-left: 75px;
+		      margin-right: 75px; 
+                      justify-content: center;
+		      background-image: var(--purple-grad);
+		      font-size: 20px;
+		    }
+	  
+		    &.grade {
+		      grid-area: grade;
+		      font-size: 28px;
+		      padding: 4px 0;
+		      font-weight: bold;
+	   
+		      &>span.grade-index {
+		        padding: 2px 8px;
+		        margin-right: 4px;
+		        background-image: var(--purple-grad);
+		      }
+		    }
+
+		    &.field-name {
+		      grid-area: field-name;
+		      padding-left: 8px;
+		      background-image: var(--purple-grad);
+		      color: white;
+		      font-style: oblique;
+		    }
+
+		    &.field-label {
+		      grid-area: field-label;
+		      display: flex;
+		      justify-content: space-around;
+		      background-color: #ff9900;
+		      
+		      &>span {
+		        font-size: 18px;  
+		        color: black;
+	 
+		        &.field-index {
+		          font-size: 28px;
+		          font-style: oblique; 
+		          font-weight: 600;
+		        }
+		      }
+		    }
+		  }
+		}
+	 
+		&>table {
+		  border: none;
+		  border-collapse: separate;
+		  border-spacing: 16px 16px; /* column gap, row gap */
+	  
+		  &>tbody>tr {
+		    width: auto;
+		    height: 40px;
+
+		    &::before {
+		      content: ''; 
+		      width: 16px;
+		      height: 16px;
+		      background-color: rebeccapurple;
+		      clip-path: polygon(
+		        0 0,
+		        100% 50%,
+		        0 100%,
+		        0 0
+		      ); /* Right triangle shape; */
+		      display: inline-block; /* To respect dimensions and margins */
+		      transform: translateY(50%); 
+		      position: relative;
+		      z-index: 0;
+		    }
+
+		    &>td {
+		      padding: 8px 16px;
+
+		      &.subject {
+		        background-color: #E6E6E6;
+		        color: #333;
+		      }
+	     
+		      &.hours {
+		        background-image: var(--purple-grad);
+		        color: #fff;
+		        text-align: center;
+		        font-weight: bold;
+		      }
+
+		      &.total-label {
+		        background-image: var(--purple-grad);
+		        color: #fff;
+		      }
+		    }
+		  }
+		}
+	  
+		&>a.download {
+		  width: auto;
+		  height: 48px;
+		  padding: 0 16px;
+		  border: 1px solid black;
+		  border-radius: 32px;
+		  font-size: 24px;
+		  color: black;
+		  background-color: white;
+		  text-decoration: none;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+
+		  &:hover {
+		    color: white;
+		    background-color: rebeccapurple; 
+		    box-shadow: 0 2px 4px black;
+		  }
+		}
+
+		&>input.share {
+		  width: 300px;
+		  height: 48px;
+		  text-align: right;
+		  font-size: 24px;
+		  }
+	        }
+	      }
+            }
+	  }
+
+	  &>footer {
+	    background-color: #96f;
+            padding: 16px;
+	    color: white;
+	    display: grid;
+	    grid-template-areas:
+	      "one"
+	      "two"
+	      "logo"
+	      "three"
+	      "four";
+	    grid-template-columns: 1fr;
+	    column-gap: 1rem;
+	    row-gap: 2rem;
+	    justify-items: center;
+	    align-items: start;
+	    justify-content: center;
+	  
+	    &>div {
+	      display: flex;
+	      flex-direction: column;
+	      justify-content: flex-start;
+	      align-items: center;
+	      row-gap: 1rem;
+
+	      &>h2,
+	      & a {
+		text-align: center;
+	      }
+	      
+	      & a {
+		font-size: 1.25rem;
+		color: var(--nav-bg-third);
+                
+                &:hover,
+                &:focus,
+                &:focus-visible,
+                &:active {
+                  color: white;
+                }
+	      }
+
+	      &.contact {
+		grid-area: one;
+	      }
+
+	      &.address {
+		grid-area: two;
+	      }
+
+	      &.links {
+		grid-area: three;
+	      }
+
+	      &.social {
+		grid-area: four;
+	      }
+	   
+	      &>address {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+	      }
+	    }
+
+	    &>img {
+	      display: block;
+	      width: 6rem;
+	      height: auto;
+	      grid-area: logo;
+	      place-self: center;
+	    }    
+	  }
+	} 
+
+	/*====MEDIA QUERIES====*/
+
+	/* First breakpoint */
+	@media only screen and (min-width: 768px) {
+	  body {
+	    &>header { 
+	      &>input#navbar-toggle:checked {
+		&~nav {
+		  clip-path: polygon( /* With clip-path: none, the animation suffers */
+		    0 0,
+		    100% 0,
+		    100% 100%,    
+		    0 100%,
+		    0 0
+		  );
+
+                  &>label[for="navbar-toggle"] {
+		    transform: translateX(256px);
+
+		    &>span { 
+		      &:nth-child(1) {
+		        transform: translate(8px, 2px) rotate(45deg);
+		      }
+
+		      &:nth-child(2) {
+		        transform: translate(-8px, 2px) rotate(-45deg); 
+		      }
+
+		      &:nth-child(5) {
+		        transform: translate(8px, -2px) rotate(-45deg); 
+		      }
+
+		      &:nth-child(6) {
+		        transform: translate(-8px, -2px) rotate(45deg); 
+		      }
+                    }
+                  }
+		}
+	      }
+	      
+	      &>nav {
+		width: 392px;
+		height: 100%;
+		box-shadow: none; /* We shall use drop-shadow filter instead, it renders after clipping */
+		clip-path: polygon( 
+		  0 0,
+		  192px 0,
+		  192px 88px, 
+		  0 288px,
+		  0 0
+		);
+
+		&>svg.logo {
+		  width: 80px;
+		  height: 80px;
+		}
+
+	        &>label[for="navbar-toggle"] {
+		  top: 22px;
+		  left: 136px;
+		  width: 40px;
+	 	  height: 40px;
+		  row-gap: 8px;
+		  transition: transform 800ms ease-in-out; /* To match the expansion of the navbar */
+		  background-color: #333;
+	      
+		  &>span {
+		    height: 8px;
+		  }
+	        } 
+	      }
+
+              &>span.slogan {
+		clip-path: polygon(
+                  0 0,
+                  48% 0,
+                  50% 20%,
+                  52% 0,
+                  100% 0,
+                  100% 100%,
+                  0 100%,
+                  0 0
+                );
+              }
+            }
+
+	    &>footer {
+	      grid-template-areas:
+		"one two"
+		"logo logo"
+		"three four";
+	      grid-template-columns: 1fr 1fr;
+	    }
+	  }
+	}
+
+	/* Second breakpoint */
+	@media only screen and (min-width: 1200px) {
+	  body {
+            &>header>span.slogan {
+              clip-path: polygon(
+                0 0,
+                49% 0,
+                50% 20%,
+                51% 0,
+                100% 0,
+                100% 100%,
+                0 100%,
+                0 0
+              );
+            }
+
+	    &>footer {
+	      grid-template-areas: "one two logo three four";
+	      grid-template-columns: repeat(5, 1fr);
+	    }
+	  }
+	}
+
+	/*
+	Coarse pointer is not precise, touch 
+	@media only screen and (hover: none) {
+	}
+	*/
