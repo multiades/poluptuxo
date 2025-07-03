@@ -203,8 +203,6 @@ body {
       font-size: 1.25rem;
 
       &:hover,
-      &:focus,
-      &:focus-visible, /* It abolishes moot focus, fallback is focus */
       &:active {
 		  background-color: rebeccapurple;
 		}
