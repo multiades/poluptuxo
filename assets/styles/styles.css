@@ -202,8 +202,7 @@ body {
       color: var(--nav-primary);
       font-size: 1.25rem;
 
-      &:hover,
-      &:active {
+      &:hover {
 		  background-color: rebeccapurple;
 		}
                 
