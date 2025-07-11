@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- Necessary for proper device viewport scalings -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"> 
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+<!-- Include an id for input and aria-label, aria-controls for the label -->
+
+<div class="thoughtBubble">
+  <input type="checkbox" 
+              id="toggler"
+              autocomplete="off"
+              hidden 
+              unchecked>
+      
+  <label for="toggler" 
+             tabindex="0" 
+             aria-label="" 
+             aria-controls="" 
+             role="button" 
+             autocomplete="off">
+    <span class="over">Share</span> 
+    <span class="under">X</span>
+  </label> 
+
+  <ul id="shareLinks">
+    <li><a>Messenger</a></li>
+    <li><a>WhatsApp</a></li>
+    <li><a>Viber</a></li>
+    <li><a>Signal</a></li>
+    <li><a>Email</a></li>
+    <li><a>Download (pdf)</a></li>
+    <li><a>Download (image)</a></li>
+  </ul>
+</div> <!-- End of div.thoughtBubble -->
+  
+  </body>
+</html>

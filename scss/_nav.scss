@@ -1,0 +1,281 @@
+input#navbar-toggler:checked {
+  ~div#navbar-caption {
+    >img#brand {
+      transition-delay: 800ms;
+      opacity: 1; 
+    }
+
+    >label[for="navbar-toggler"]>span {
+      // The hamburger button animation
+      background-color: red;
+	    
+      :nth-child(1) {
+        transform-origin: top left;
+        // Translation first, otherwise the transform-origin skewes the translation after rotation
+        transform: translate(6px, 1.5px) rotate(45deg); 
+      }
+
+      :nth-child(2) {
+        transform-origin: top right;
+        transform: translate(-6px, 1.5px) rotate(-45deg); 
+      }
+   
+      // Central blocks move out and become invisible   
+      :nth-child(3) {
+        transform: translateX(-16px);
+        opacity: 0;
+      }
+
+      :nth-child(4) {
+        transform: translateX(16px);
+        opacity: 0;
+      }
+
+      :nth-child(5) {
+        transform-origin: bottom left;
+        transform: translate(6px, -1.5px) rotate(-45deg); 
+      }
+
+      :nth-child(6) {
+        transform-origin: bottom right;
+        transform: translate(-6px, -1.5px) rotate(45deg); 
+      }
+    }
+  }
+    
+  ~nav {
+    transition-delay: 0s; // Not plain 0 for values of time
+    overflow: hidden auto;
+    clip-path: polygon( // Match the points one-to-one for optimal transition 
+      0 0,
+      100% 0,
+      100% 100%,
+      calc(100% - 96px) 100%,
+      96px 100%,
+      0 100%,
+      0 0
+    );
+   	
+    // Immediate link descendants only
+    >a,
+    >label.dropdown {
+      >span.destination {
+        opacity: 1;
+        transition-delay: 800ms; // Waiting for the navbar to fully expand
+      }
+    }
+
+    // Can't target before and after pseudoelements with >*, even though they appear as children
+    >label.dropdown::after {
+      opacity: 1;
+      transition-delay: 800ms; 
+    }
+  }
+}
+
+div#navbar-caption {
+  >img#brand {
+    opacity: 0; 
+  }
+
+  >label[for="navbar-toggler"]>span {
+      background-color: red;
+	    
+      :nth-child(1) {
+        transform-origin: top left;
+        // Translation first, otherwise the transform-origin skewes the translation after rotation
+        transform: translate(6px, 1.5px) rotate(45deg); 
+      }
+
+      :nth-child(2) {
+        transform-origin: top right;
+        transform: translate(-6px, 1.5px) rotate(-45deg); 
+      }
+   
+      // Central blocks move out and become invisible   
+      :nth-child(3) {
+        transform: translateX(-16px);
+        opacity: 0;
+      }
+
+      :nth-child(4) {
+        transform: translateX(16px);
+        opacity: 0;
+      }
+
+      :nth-child(5) {
+        transform-origin: bottom left;
+        transform: translate(6px, -1.5px) rotate(-45deg); 
+      }
+
+      :nth-child(6) {
+        transform-origin: bottom right;
+        transform: translate(-6px, -1.5px) rotate(45deg); 
+      }
+    }
+
+    &>nav {
+      position: fixed; /* Create a stacking context */
+      top: 0;
+      left: 0;
+      z-index: 1; /* Appear on top of the arrows in the schedule tables that are at z-index 0 */
+      width: 100%; 
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--nav-bg-first);
+      padding-top: 8rem;
+      /* Transition on GPU-accelerated clip-path instead of CPU-intensive height that causes document reflow */
+      transition: clip-path 800ms ease-in-out;
+      transition-delay: 100ms; /* When navbar is unchecked, wait for content to fade out */
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 96px,
+        calc(100% - 96px) 20px,
+        96px 20px,
+        0 96px,
+        0 0
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+              
+      /* All nav-descendant flex items won't get squished (scootched) on overflows, maybe omit images */
+      & * {
+        flex-shrink: 0;
+      }
+
+      & a,
+      & label.dropdown {
+      width: 100%; /* Not by default, no block level elements */
+      height: 4rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--nav-primary);
+      font-size: 1.25rem;
+
+      &:hover {
+		  background-color: rebeccapurple;
+		}
+                
+                /*
+                  outline: 1px solid var(--nav-secondary);Different from the focus one
+                  Mimicking the outer-ring of tabbed focus, can't have double outline
+                  and border affects the layout 
+                  box-shadow: 0 0 0 1.5px white; The fourth parameter is spead radius
+                */   
+	      }
+
+	      & label.dropdown {
+		&::after {
+		  content: '';
+                  background-color: var(--nav-primary);
+                  display: inline-block; /* To respect transition and size*/
+                  width: 1.25rem;
+                  height: 1.25rem;
+                  clip-path: polygon(
+                    0 25%,
+                    15% 25%,
+                    50% 64.2%, /* Pythagorean theorem */
+                    85% 25%,
+                    100% 25%,
+                    100% 40%,
+                    50% 80%, 
+                    0 40%,
+                    0 25%
+                  );  
+                  margin-left: 1rem;
+	        }
+	 
+		&+ul {
+		  display: none;
+		}
+	      }
+              }
+
+              &>img#brand {
+                display: inline-block;
+                position: absolute;
+                top: 8px;
+                left: 64px;
+                width: auto;
+                height: 48px;
+                transition: opacity 100ms ease-in-out;
+                transition-delay: 0s;
+                opacity: 0;
+              }
+
+	      &>label[for="navbar-toggler"] {
+                position: absolute;
+                top: 16px;
+                right: 16px;
+	        width: 30px;
+	        height: 30px;
+                contain: paint; /* Isolate the element's visual effects to its border box, Safari excluded */	
+	        display: grid;
+	        grid-template-columns: repeat(2 , 1fr);
+	        grid-template-rows: repeat(3, 2fr);
+	        row-gap: 6px;
+
+	        &>span {
+		  height: 6px;
+		  transition: all 400ms ease-in-out; /* The animation is suffering if only transform, opacity and bg-color are listed */
+		  background-color: white;
+
+		  /* Line halves 1, 3, 5 */
+		  &:nth-child(odd) {
+		    border-radius: 16px 0 0 16px; /* Rounded border only on the left side */
+		  }
+
+		  /* Lines 2, 4, 6 */
+		  &:nth-child(even) {
+		    border-radius: 0 16px 16px 0; /* Rounded border only on the right side */
+		  }
+	        }
+	      }
+
+              /* Only the immediate sibling labels of the hidden inputs*/
+	      & input:checked+label.dropdown { 
+		&::after {
+		  transform: rotateX(180deg);
+		}
+
+		&+ul { /* Only the immediate sibling */
+		  width: 100%; /* Not by default */
+		  display: flex;
+		  flex-direction: column;
+		  justify-content: flex-start;
+		  align-items: center;
+		  background-color: var(--nav-bg-second);
+		  list-style: none; 
+
+		  &>li {
+		    width: 100%; /* Not by default */
+		    flex-shrink: 0;
+		    
+		    &>label.dropdown+ul { /* Submenus of depth 2 */
+		      background-color: var(--nav-bg-third); 
+		    }
+		  }
+		}   
+	      }
+
+	      &>a,
+	      &>label.dropdown {
+		&>span.destination {
+		  opacity: 0;
+		  overflow: hidden;
+		  transition: opacity 100ms ease-in-out;
+		  transition-delay: 0s;
+		}
+              }
+ 
+              &>label.dropdown::after {
+	        opacity: 0;
+		overflow: hidden;
+		transition: opacity 100ms ease-in-out;
+		transition-delay: 0s;
+              }
+	    }

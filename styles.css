@@ -1,0 +1,114 @@
+div.thoughtBubble {
+  width: 384px;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+input#toggler:checked ~ label[for=toggler] > span.under {
+  position: relative;
+  opacity: 1;
+}
+input#toggler:checked ~ label[for=toggler] > span.over {
+  position: absolute;
+  opacity: 0;
+}
+input#toggler:checked ~ ul#shareLinks {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  row-gap: 8px;
+}
+
+label[for=toggler] {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4.8px 9.6px;
+  font-size: 24px;
+  color: #333;
+  background-color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  box-shadow: 0 0 4px 0 #333;
+}
+label[for=toggler]:hover, label[for=toggler]:active {
+  color: white;
+  background-color: rebeccapurple;
+}
+label[for=toggler] > span {
+  top: 0;
+  left: 0;
+}
+label[for=toggler] > span.under {
+  position: absolute;
+  opacity: 0;
+}
+label[for=toggler] > span.over {
+  position: relative;
+  opacity: 1;
+}
+
+ul#shareLinks {
+  display: none;
+  max-width: 100%;
+  list-style-type: none;
+  position: absolute;
+  bottom: calc(100% + 16px);
+  border-radius: 16px;
+  background-color: white;
+  padding: 8px 16px;
+  box-shadow: 0 -2px 8px -2px #333;
+}
+ul#shareLinks > li {
+  cursor: pointer;
+  color: black;
+  font-size: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+ul#shareLinks > li:hover, ul#shareLinks > li:active {
+  color: cyan;
+}
+ul#shareLinks > li::before {
+  content: "";
+  display: inline-block;
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+}
+ul#shareLinks > li:nth-child(1)::before {
+  background-image: url("./messenger.png");
+}
+ul#shareLinks::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 100%;
+  align-self: center;
+  background-color: white;
+  width: 12px;
+  height: 12px;
+  clip-path: polygon(0 0, 50% 100%, 100% 0, 0 0);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*# sourceMappingURL=styles.css.map */

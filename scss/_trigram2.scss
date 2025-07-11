@@ -1,0 +1,57 @@
+// Prerequisites: 1) hidden checkbox (alter id as desired)
+
+// Imports
+
+@use "sass:math" as math; // Import the math module for math.div
+
+// Variables
+
+$line-height: 6;
+$primary-color: white;
+$secondary-color: white;
+$trans-duration: 400ms; // trans @ transition
+$trans-curve: ease-in-out;
+ 
+// Main content
+
+// When the hidden checkbox is checked
+input#toggler:checked {
+  &~label[for="toggler"]>span {
+    background-color: $secondary-color;
+
+    // Trigram to X	    
+    &:nth-child(1) {
+      transform-origin: top left;
+      // Translation first, otherwise the transform-origin skewes the translation after rotation
+      transform: rotate(45deg); 
+    }
+
+    // Central line becomes transparent   
+    &:nth-child(2) {
+      opacity: 0; 
+    }
+   
+    &:nth-child(3) {
+      transform-origin: bottom left;
+      transform: translate($line-height * 1px, math.div($line-height, 4) * -1px) rotate(-45deg);
+    }
+  }
+}
+
+label[for="toggler"] {
+  width: $line-height * 5px;
+  height: $line-height * 5px;
+  display: flex; // Encapsulate the flex column layout, it is quite common
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center; // Or flex-start, it behaves the same
+  row-gap: 9px;
+
+  &>span {
+    width: 100%;
+    height: $line-height * 1px;
+    // The animation is suffering if only transform, opacity and bg-color are transitioned on
+    transition: all $trans-duration $trans-curve;
+    background-color: $primary-color;
+  }
+}
