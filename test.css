@@ -383,7 +383,6 @@ input#navToggler:checked {
   }
 }
 
-
 footer {
   background-color: #96f;
   padding: 16px;
@@ -464,7 +463,7 @@ footer {
   div#navHeader {
     /*
     --initialWidth: 126px;
-    --height: 64px;
+    --height: 96px;
     */
      
     width: 448px; 
@@ -543,8 +542,10 @@ footer {
 @media only screen and (hover: hover) { /* Apply on devices that support hovering */
   nav#navbar {
     & a,
-    & label.dropdown:hover {
-      background-color: rebeccapurple;
+    & label.dropdown {
+      &:hover {
+        background-color: rebeccapurple;
+      }
     }
   }
 }
