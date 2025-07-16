@@ -134,7 +134,7 @@ nav#navbar {
   left: 0;
   width: 100vw; 
   height: calc(100vh - 64px);
-  height: calc(100svh - 64px);
+  height: calc(100dvh - 64px); /* Use dvh units to keep height consistent */
   overflow: hidden;
   padding-top: 32px; /* For focus rings and styling */
   background-color: #333;
@@ -173,10 +173,6 @@ nav#navbar {
     align-items: center;
     color: white;
     font-size: 1.25rem;
-
-    &:hover {
-      background-color: rebeccapurple;
-    }
   }
 
   & label.dropdown {
@@ -541,5 +537,14 @@ footer {
   footer {
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas: "one two logo three four";
+  }
+}
+
+@media only screen and (hover: hover) { /* Apply on devices that support hovering */
+  nav#navbar {
+    & a,
+    & label.dropdown:hover {
+      background-color: rebeccapurple;
+    }
   }
 }
