@@ -6,7 +6,6 @@
 
 body {
   font-size: medium;
-  overflow: hidden auto;
 }
 
 a {
@@ -15,10 +14,8 @@ a {
 }
 
 header {
-  width: 100vw; /* 100 viewport units include the scrollbar, whereas 100% does not. Use as a fallback */
-  width: 100svw;
-  height: 100vh;
-  height: 100svh;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   background: url('./hero.jpg') center / cover no-repeat;
   display: flex;
