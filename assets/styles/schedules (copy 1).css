@@ -1,0 +1,373 @@
+  /* CSS fot he ./schedules/gel/c.html page */
+  
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;	
+}
+  
+body {
+  font-family: "Roboto", Sans-serif;
+  font-size: medium;
+  overflow-x: hidden;
+}
+  
+a,
+label[for],
+button {
+  cursor: pointer; /* No need to us e:hover, it is evident */
+}
+  	    
+a {
+  font-style: normal;
+  text-decoration: none;  
+} 
+  
+main {
+  padding: 10vh 10vw;
+  /* overflow: hidden; */
+  background-color: var(--main-bg);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+  
+div.wrapper {
+  /* Custom CSS properties */
+  --purple: linear-gradient(45deg, #a86dad 0%, #985399 100%);
+  --lightPurple: #cc99ff; /* Plain color */
+  --orange: linear-gradient(45deg, #f27b76 0%, #ef756f 30%, #ea675f 70%, #e55a4f 100%);
+  --green: linear-gradient(45deg, #7fcaad 0%, #64c3a3 40%, #3cb994 100%);
+  --blue: #8ab8d6; /* Plain color */
+  --yellow: linear-gradient(45deg, #ffd786 0%, #fcb833 100%);
+  
+  display: inline-block; /* Shrinks to fit content */
+  
+  /* Background colors of different schedule figures */
+&:nth-child(1)>figure.schedule { /* Relative to the container (main) */
+  background-image: var(--orange);
+}
+
+&:nth-child(2)>figure.schedule  {
+  background-image: var(--green);
+}
+
+&:nth-child(3)>figure.schedule  {
+  background-color: var(--blue);
+}
+	  
+&:nth-child(4)>figure.schedule  {
+  background-color: var(--lightPurple);	
+}
+}
+
+figure.schedule {
+  width: 384px;
+  height: auto;
+  font-size: 20px;
+  font-weight: 500; /* Only in hundreds, supported by Roboto */
+  color: black;
+  /* filter: drop-shadow(0 2px 4px #333); It creates a stacking context*/
+  box-shadow: 0 0 8px #333;
+  padding-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  row-gap: 64px;
+  transform-origin: top left; /* For JS scaling for narrow devices, avoids awkward scaling */
+  position: relative; /* Reference point fot the ul.shareLinks' positioning */ 
+}
+
+figcaption {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 32px 48px 80px;
+  grid-template-columns: repeat(2, 1fr); /* 1fr is fluid, depending on the content */
+  grid-template-areas: 
+    "banner banner"
+    "icons grade"
+    "field-name field-label";
+  row-gap: 16px;
+   /* Mainly for the banner, translating Y creates an undesired stacking context */
+  margin: -16px 0 16px;
+  
+  &>img {
+    grid-area: icons;
+    width: 48px;
+    height: 48px;
+    margin-left: 16px;
+
+    &+img { /* If a second image exists */
+      margin-left: 80px;
+    }
+  }
+	 
+  &>div {
+    display: flex; /* Center each section's text, which lies within a span element, not a raw text node */
+    justify-content: flex-start;
+    align-items: center;
+	      
+    &.banner {
+      grid-area: banner;
+      width: max-content;
+      padding: 0 16px;
+      justify-self: center;
+      background-image: var(--purple);
+      color: white;
+      font-size: 20px;
+    }
+	  
+    &.grade {
+      grid-area: grade;
+      color: white;
+      font-size: 26px;
+      margin-right: 16px;
+      
+      &>span.grade-index {
+        padding: 2px 8px 4px; /*  top sides bottom */
+        margin-right: 4px;
+        background-image: var(--purple);
+      }
+    }
+
+    &.field-name {
+      grid-area: field-name;
+      padding: 0 16px;
+      background-image: var(--purple);
+      color: white;
+      font-style: oblique;
+    }
+
+    &.field-label {
+      grid-area: field-label;
+      padding: 0 16px;
+      column-gap: 8px;
+      background-image: var(--yellow);
+
+      &>span {
+        font-size: 18px;
+
+        &.field-index {
+          font-size: 24px;
+          font-style: oblique;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+	 
+table {
+  width: 80%; /* 307.2px */;
+  table-layout: fixed; /* Enforce strict table dimensions */
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0 0; /* column gap, row gap */
+
+  &>colgroup>col { /* Fix the column widths */
+    &.column1 { /* Just the marker */ 
+      width: 32px;
+    }
+
+    &.column2 { 
+      width: 227.2px;
+    }
+
+    &.column3 { 
+      width: 48px;
+    }
+  }
+	  
+  &>tbody>tr {
+    height: 52px;
+    
+    &::before {
+      content: '';
+      display: inline-block; /* To respect dimensions and margins */
+      width: 32px;
+      height: 16px;
+      background-image: var(--purple);
+      margin-top: 10px;
+      clip-path: polygon( 
+        0 0,
+        50% 50%,
+        0 100%,
+        0 0
+      ); 
+    }
+
+    &>td {
+      line-height: 1;
+
+      &.subject,
+      &.hours,
+      &.total {
+        padding: 8px 16px 24px 16px;
+      }
+ 
+      &.subject {
+        /* Trick for cutting the background short */
+        background-image: linear-gradient(to right, #e6e6e6, #e6e6e6);
+        background-size: calc(100% - 16px) 100%;
+        background-repeat: no-repeat;
+      }
+	
+      &.hours,
+      &.total {
+        color: white;
+      }
+
+      &.hours {
+        background-image: var(--purple);
+        text-align: center;
+      }
+
+      &.total,  
+      &.total+td.hours { /* Bypass the last row's backdround gradient */
+        background-image: none;
+        background-color: #985399;
+      }
+    }
+
+    &:last-child {
+      &::before {
+        /* A trick for the last arrow to be invisible but present, so as to not break the table layout */
+        background-image: none; 
+      }
+    }
+  }
+}  
+
+label[for] {
+  /* 
+  Taking up as much space as its content, but using flexbox instead
+  of inline-block, the text 
+  */
+  display: inline-flex; 
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  line-height: 1; /* Foce the font-size to be equal to the height */
+  padding: 16px;
+  color: white;
+  background-image: var(--purple);
+  border-radius: 16px;
+  cursor: pointer; /* No need to use :hover, it is activated when hovered */
+  position: relative; /* To position the children spans */
+  user-select: none; /* Make text not selectable */
+
+  &:hover,
+  &:active {
+    box-shadow: 0 2px 8px 0 #333;
+  }
+
+  &>span {
+    top: 0; /* Relative to the positioned label*/
+    left: 0;
+   
+    /* Can't transition on opacity, gives a slight flicker on the repositiong of the spans */
+    &.onShare {
+      position: absolute; /* Removed from the document flow */
+      opacity: 0;
+    }
+
+    &.offShare {
+      position: relative; /* Within the document flow; */
+      opacity: 1;
+    }
+  }
+}
+
+ul.shareLinks {
+  display: none;
+  position: absolute; /* Out of the document flow */
+  bottom: 112px;
+  left: 50%;
+  transform: translateX(-50%); /* Centered */
+  padding: 16px;
+  width: 80%;
+  height: auto;
+  border-radius: 16px;
+  background-color: white;
+  list-style-type: none;
+  box-shadow: 0 0 8px 0 #333;
+
+  &>li {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    /* 
+    Can't use :nth-child on pseudo-elements to control the backgroun-images,
+    not in the DOM tree, need this hack
+    */
+    &:nth-child(1) {
+      &::before {
+        background: url('../images/messenger.png') center / cover no-repeat;
+      }
+    }     
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+    }
+
+    &>a {
+      color: black; /* Mandatory, the href attribute bypasses the general styling */
+      text-decoration: none; 
+
+      &:hover,
+      &:active {
+        color: cyan;
+      }
+    }
+  }
+
+  &::after { /* The thought bubble tail */
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 100%;
+    align-self: center;
+    background-color: white;
+    width: 32px;
+    height: 16px;
+    clip-path: polygon(25% 0, 75% 0, 25% 100%, 25% 0);
+  }
+}
+
+/* When the hidden inputs are checked */
+input[type="checkbox"]:checked { 
+  &~label[for] {
+    background-image: none;
+    background-color: red;
+  
+    &>span { 
+      &.onShare {
+        position: relative; /* Get in the document flow */
+        opacity: 1;
+      }
+
+      &.offShare {
+        position: absolute; /* Get out of the document flow */
+        opacity: 0;
+      }
+    }
+  }
+
+  &~ul.shareLinks {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    row-gap: 16px;
+  }
+}
+
+/*====MEDIA QUERIES====*/

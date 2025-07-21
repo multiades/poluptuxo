@@ -1,0 +1,457 @@
+/* CSS for the ./schedules/ pages */ 
+  
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;	
+}
+
+html, 
+body {
+  width: 100%; /* More consistent than viewport units */
+  height: 100%;
+}
+  
+body {
+  font-family: "Roboto", Sans-serif;
+  font-size: medium;
+}
+  
+a,
+label[for],
+button {
+  cursor: pointer; /* No need to us :hover, it is evident */
+}
+  	    
+a {
+  font-style: normal;
+  text-decoration: none;  
+} 
+
+main {
+  padding: 10vh 10vw;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4rem;
+}
+  
+div.wrapper {
+  display: inline-block; /* Shrinks to fit content */
+}
+
+figure.schedule {
+  /* Custom CSS properties */
+  --purple: linear-gradient(45deg, #a86dad 0%, #985399 100%);
+  --lightPurple: #cc99ff; /* Plain color */
+  --orange: linear-gradient(45deg, #f27b76 0%, #ef756f 30%, #ea675f 70%, #e55a4f 100%);
+  --green: linear-gradient(45deg, #7fcaad 0%, #64c3a3 40%, #3cb994 100%);
+  --blue: #8ab8d6; /* Plain color */
+  --yellow: linear-gradient(135deg, #ffd786 0%, #fcb833 100%);
+
+  width: 384px;
+  height: auto;
+  font-size: 20px;
+  font-weight: 500; /* Only in hundreds, supported by Roboto */
+  line-height: 1.2;
+  color: black;
+  padding-bottom: 64px;
+  filter: drop-shadow(0 2px 4px #333); /* It creates a stacking context */
+  /* box-shadow: 0 0 8px #333; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  /* Won't use row-gap because of negative margins on figcaption's children */
+  transform-origin: top left; /* For JS scaling for narrow devices, defends from awkward scaling */
+  position: relative; /* Reference point fot the ul.shareLinks' positioning */ 
+
+  &>figcaption,
+  &>ul { /* Every child except for the sharing label */
+    margin-bottom: 64px; /* Artificial row-gap */
+  }
+
+  /* Background colors of different schedule figures */
+  &.humanities {
+    background-image: var(--orange);
+  }
+
+  &.natural {
+    background-image: var(--green);
+  }
+
+  &.medical {
+    background-color: var(--blue);
+  }
+
+  &.econ {
+    background-color: var(--lightPurple);
+  }
+}
+
+figcaption {
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-rows: 32px 48px 80px;
+  grid-template-columns: repeat(2, 1fr); /* 1fr is fluid, depending on the content */
+  grid-template-areas: 
+    "banner banner"
+    "icons grade"
+    "field-name field-label";
+  row-gap: 16px;
+  /* Mainly for the banner, translating Y creates an undesired stacking context */
+  margin: -16px 0 16px; /* top sides bottom */
+  
+  &>img {
+    grid-area: icons;
+    width: 48px;
+    height: 48px;
+    margin-left: 16px;
+
+    &+img { /* If a second image exists */
+      margin-left: 80px;
+    }
+  }
+	 
+  &>div {
+    display: flex; /* Center each section's text, which lies within a span element, not a raw text node */
+    justify-content: flex-start;
+    align-items: center;
+
+    &.banner,
+    &.grade {
+      line-height: 1; /* Make height and font match for one-liners */
+    } 
+
+    &.banner {
+      grid-area: banner;
+      width: max-content;
+      padding: 4px 16px;
+      justify-self: center;
+      background-image: var(--purple);
+      color: white;
+      font-size: 24px;
+    }
+	  
+    &.grade {
+      grid-area: grade;
+      color: white;
+      font-size: 26px;	
+
+      &>span {
+        line-height: inherit; /* 1, from the parent */
+        
+        &.grade-index {
+          padding: 4px 8px 6px;
+          margin-right: 4px;
+          background-image: var(--purple);
+        } 
+      }
+    }
+
+    &.field-name {
+      grid-area: field-name;
+      padding-left: 32px;
+      font-size: 18px;
+      background-image: /* Layer the backgrounds, nice hack */
+        var(--purple), /* Top layer*/
+        var(--yellow); /* Bottom layer */
+      background-repeat: no-repeat; /* Ensure background does not tile */
+      background-size: auto; /* Just to avoid inherited values */
+      background-position:
+        16px 0, /* Move the top background 16px to the right */
+        0 0; /* Keep the bottom background at the origin point */
+      color: white;
+      font-style: oblique;
+    }
+
+    &.field-label {
+      grid-area: field-label;
+      padding-left: 16px;
+      column-gap: 8px;
+      background-image: var(--yellow);
+
+      &>span {
+        font-size: 18px;
+
+        &.field-index {
+          font-size: 24px;
+          font-style: oblique;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+	 
+ul.subjectList {
+  list-style-type: none; /* For rigidness, flex container lis get rid of it either way */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  row-gap: 16px;
+  
+  &>li {
+    display: flex; /* The li marker from the ul dissappears, only for block level display */
+    justify-content: flex-start;
+    align-items: flex-start;
+    column-gap: 16px;
+   
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-top: 10px; /* To be centered with the first row */
+      clip-path: polygon(0 0, 100% 50%, 0 100%, 0 0); /* Right-pointing triangle */
+    }
+
+    /* Cycle through 4 (factor of n) background-colors for the markers */
+    &:nth-child(4n+1)::before { /* n is in N */
+      background-color: rebeccapurple;
+    }
+
+    &:nth-child(4n+2)::before {
+      background-color: blue;
+    }
+
+    &:nth-child(4n+3)::before {
+      background-color: darkred;
+    }
+
+    &:nth-child(4n+4)::before {
+      background-color: darkgreen;
+    }
+    
+    &>div {
+      &.subject {
+        width: 200px;
+        height: auto;
+
+        &>div {
+          background-color: #e6e6e6;
+          padding-left: 8px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+  
+          &.subjectName {
+            height: 36px;
+          }
+ 
+          &.subjectExtra {
+            margin-top: 4px; /* Leave a small gap */
+            height: auto;
+            font-size: 16px;
+          }
+        }
+      }
+
+      &:not(.subject) { /* Hours and total */
+        height: 36px;
+        display: flex;
+        flex-direction: column; /* Using this so I can control the sides of the total row with align-self */
+        justify-content: center;
+        align-items: center;
+        color: white;
+      }
+
+      &.hours {
+        width: 52px;
+        background-image: var(--purple);
+      }
+    }
+
+    &:last-child { /* The last one (the total row) */
+      background-image: var(--purple);
+      background-position: 32px 0; /* Starting at offset 32px to account for the invisible marker */
+      background-repeat: no-repeat;
+      background-size: auto;
+      column-gap: 0; /* Zero out the gap for uniform backgorund color */
+
+      &::before {
+        background-color: transparent; /* Present but invisible */
+        margin-right: 16px; /* To counteract zeroing out the column-gap */
+      }
+ 
+      &>div {
+        background: none; /* Have li control the background for this row */
+  
+        &:first-child { /* The total label row */
+          width: 216px;
+          padding: 8px;
+
+          &>span {
+            align-self: flex-start; /* Hours are centered */
+          }
+        }
+      }
+    }  
+  }
+}
+
+label[for]:not([for="navToggler"]):not(.dropdown) {
+  width: auto;
+  height: 64px;
+  /* 
+  Taking up as much space as its content, but using flexbox instead
+  of inline-block, the text 
+  */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  line-height: 1; /* Foce the font-size to be equal to the height */
+  padding: 16px;
+  color: white;
+  background-color: darkviolet;
+  border-radius: 16px;
+  cursor: pointer; /* No need to use :hover, it is activated when hovered */
+  position: relative; /* To position the children spans */
+  user-select: none; /* Make text not selectable */
+
+  &:hover { /* Not looking nice on :active */
+    box-shadow: 0 2px 8px 0 #333;
+  }
+
+  &>span {
+    top: 0; /* Relative to the positioned label*/
+    left: 0;
+    overflow: hidden; /* For text not to overflow on zero dimension spans */
+   
+    /* Can't transition on opacity, gives a slight flicker on the repositiong of the spans */
+    &.exitAction {
+      position: absolute; /* Removed from the document flow */
+      width: 0;
+      height: 0;
+    }
+
+    &.shareAction {
+      position: relative; /* Within the document flow; */
+      width: auto;
+      height: auto;
+    }
+  }
+}
+
+ul.shareLinks {
+  display: none;
+  position: absolute; /* Out of the document flow */
+  bottom: 84px; /* 64px padding-bottom + 16px for the bubble thought tail + 4px offset, the ro-gap is respected */
+  left: 50%;
+  transform: translateX(-50%); /* Centered */
+  width: 80%;	
+  padding: 16px;
+  border-radius: 32px;
+  background-color: white;
+  list-style-type: none;
+  filter: drop-shadow(0 2px 4px #333); /* To cover the tail as well */
+
+  &>li {
+    &>a {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      color: black; /* Mandatory, the href attribute bypasses the general styling */
+      text-decoration: none; 
+      font-size: 20px;
+
+      &:hover,
+      &:active {
+        color: #93f;
+      }
+
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin-right: 16px;
+        background-repeat: no-repeat;
+      }
+    }
+
+    /* 
+    Can't use :nth-child on pseudo-elements to control the background-images,
+    not in the DOM tree, need this hack and to enumerate lis, not as.
+    */
+    &:nth-child(1)>a {
+      &::before {
+        background-image: url('../images/messenger.png');
+      }
+    }
+
+    &:nth-child(2)>a {
+      &::before {
+        background-image: url('../images/whatsApp.png');
+      }
+    }     
+
+    &:nth-child(3)>a{
+      &::before {
+        background-image: url('../images/viber.png');
+      }
+    }     
+
+    &:nth-child(4)>a {
+      &::before {
+        background-image: url('../images/email.png');
+      }
+    }     
+
+    &:nth-child(5)>a,
+    &:nth-child(6)>a {
+      &::before {
+        background-image: url('../images/download.png');
+      }
+    }          
+  }
+
+  &::after { /* The thought bubble tail */
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 100%;
+    align-self: center;
+    background-color: white;
+    width: 32px;
+    height: 16px;
+    clip-path: polygon(25% 0, 75% 0, 25% 100%, 25% 0);
+  }
+}
+
+/* When the hidden inputs are checked */
+input[type="checkbox"]:not(#navToggler):checked { 
+  &~label[for]:not([for="navToggler"]):not(.dropdown) {
+    background-color: #c03;
+
+    &>span {
+      &.exitAction {
+        position: relative; /* Get in the document flow */
+        width: auto;
+        height: auto;
+      }
+ 
+      &.shareAction {
+        position: absolute; /* Get out of the document flow */
+        width: 0;
+        height: 0;
+      }
+    }
+  }
+
+  &~ul.shareLinks {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    row-gap: 16px;
+  }
+}
+
+/*====MEDIA QUERIES====*/
+

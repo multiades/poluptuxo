@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="el">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"> <!-- Necessary for proper device viewport scalings -->
+    <title>Πολύπτυχο | Φροντιστήριο μέσης εκπαίδευσης</title>
+    <link rel="stylesheet" href="./assets/styles/headerFooter.css">
+  </head>
+
+<body>
+<header>
+  <input type="checkbox" 
+         id="navToggler" 
+         autocomplete="off" 
+         hidden 
+         unchecked>
+  
+  <div id="navHeader">
+    <img src="./assets/images/awakeOwl.svg" class="logo logoLower" aria-hidden="true">
+  
+    <img src="./assets/images/halfAwakeOwl.svg" class="logo logoMiddle" aria-hidden="true">
+  
+    <img src="./assets/images/asleepOwl.svg" class="logo logoUpper" aria-hidden="true">
+    
+    <img src="./assets/images/brand.svg" class="brand" alt="Πολύπτυχο, φροντιστήριο μέσης εκπαίδευσης">
+  </div> <!-- End of div#navHeader -->
+  
+  <!-- After the div#navHeader to be stacked on it -->
+  <label for="navToggler" 
+             tabindex="0" 
+             aria-label="Μπάρα πλοήγησης" 
+             aria-controls="navbar" 
+             role="button" 
+             autocomplete="off">
+    <!-- Trigram's individual line halves, 2 per line -->
+    <span></span> 
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </label>
+  
+  <nav id="navbar"> <!-- Non interactive on load -->
+    <a href="#">
+      <span class="destination">Αρχική</span>
+    </a>
+   
+    <!-- Assistive technologies exclude hidden inputs from the accessibility tree != DOM tree --> 
+    <input type="checkbox" id="company" autocomplete="off" hidden unchecked>
+    <label for="company" role="button" class="dropdown">
+      <span class="destination">Το φροντιστήριο</span>
+    </label>
+    <ul>
+      <li><a href="./study/infastructure.html">
+        <span class="destination">Εγκαταστάσεις</span>
+      </a></li>
+      <li><a href="#">
+        <span class="destination">Αναγνωστήριο</span>
+      </a></li>
+    </ul>
+  
+    <input type="checkbox" id="schedules" autocomplete="off" hidden unchecked>
+    <label for="schedules" role="button" class="dropdown">
+      <span class="destination">Προγράμματα σπουδών</span>
+    </label>
+    <ul>
+      <li> 
+        <input type="checkbox" id="gel" autocomplete="off" hidden unchecked>
+        <label for="gel" role="button" class="dropdown">
+          <span class="destination">ΓΕΛ</span>
+        </label>
+        <ul>
+          <li><a href="./schedules/gel/c-gel.html" draggable="false">
+            <span class="destination">Γ' Γενικού Λυκείου</span>
+          </a></li>
+          <li><a href="./shedules/gel/b.html">
+            <span class="destination">Β' Γενικού Λυκείου</span>
+          </a></li>
+          <li><a href="#">
+            <span class="destination">Α' Γενικού Λυκείου</span>
+          </a></li>
+        </ul>
+      </li>
+  
+      <li> 
+        <input type="checkbox" id="epal" autocomplete="off" hidden unchecked>
+        <label for="epal" role="button" class="dropdown">
+          <span class="destination">ΕΠΑΛ</span>
+        </label>
+        <ul>
+          <li><a href="#">
+            <span class="destination">Γ' Επαγγελματικού Λυκείου</span>
+          </a></li>
+          <li><a href="#">
+            <span class="destination">Β' Επαγγελματικού Λυκείου</span>
+          </a></li>
+          <li><a href="#">
+            <span class="destination">Α' Επαγγελματικού Λυκείου</span>
+          </a></li>
+        </ul>
+      </li>
+  
+      <li> 
+        <input type="checkbox" id="gym" autocomplete="off" hidden unchecked>
+        <label for="gym" role="button" class="dropdown">
+          <span class="destination">Γυμνάσιο</span>
+        </label>
+        <ul>
+          <li><a href="#">
+            <span class="destination">Γ' Γυμνασίου</span>
+          </a></li>
+          <li><a href="#">
+            <span class="destination">Β' Γυμνασίου</span>
+          </a></li>
+          <li><a href="#">
+            <span class="destination">Α' Γυμνασίου</span>
+          </a></li>
+        </ul>
+      </li>
+    </ul>
+  
+    <a href="./contact.html">
+      <span class="destination">Επικοινωνία</span>
+    </a>
+  </nav>
+
+  <h1>Αρωγός στην προσπάθεια του μαθητή</h1>
+</header>
+
+    <footer>
+      <div class="contact">
+        <h2>Eπικοινωνία</h2>
+        <address>
+            <a href="tel:00302108848188">210-8848188</a>
+        </address>
+        <address>
+          <a href="mailto:info@poluptuxo.gr" lang="en">info@poluptuxo.gr</a>
+        </address>
+      </div> <!-- End of div.contact -->
+
+      <div class="address">
+        <h2>Διεύθυνση</h2>
+        <address>
+          <a href="#">Καυκάσου 134, Άνω Κυψέλη, 11363</a>
+        </address>
+      </div> <!-- End of div.address -->
+
+      <img src="./assets/images/awakeOwl.svg" aria-hidden="true">
+
+      <div class="links">
+        <h2>Χρήσιμοι σύνδεσμοι</h2>
+        <a href="#">Οικονομικές προσφορές</a>
+      </div> <!-- End of div.links -->
+
+      <div class="social">
+        <h2>Ακολουθήστε μας</h2>
+        <address>
+          <a href="#" lang="en">facebook</a>
+        </address>
+      </div> <!-- End of div.social -->
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/scripts/label.js"></script>
+    <script src="../assets/scripts/navbar.js"></script>
+  </body>
+</html>
