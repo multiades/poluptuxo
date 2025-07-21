@@ -29,6 +29,8 @@ a {
 } 
 
 main {
+  width: 100%;
+  height: auto;
   padding: 10vh 10vw;
   background-color: white;
   display: flex;
@@ -454,4 +456,8 @@ input[type="checkbox"]:not(#navToggler):checked {
 }
 
 /*====MEDIA QUERIES====*/
-
+@media only screen and (min-width: 1200px) {
+  main {
+    padding: 10vh 20 vw;
+  }
+}
