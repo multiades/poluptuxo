@@ -31,7 +31,7 @@ a {
 main {
   width: 100%;
   height: auto;
-  padding: 10vh 10vw;
+  padding: 10%;
   background-color: white;
   display: flex;
   flex-wrap: wrap;
@@ -457,7 +457,4 @@ input[type="checkbox"]:not(#navToggler):checked {
 
 /*====MEDIA QUERIES====*/
 @media only screen and (min-width: 1200px) {
-  main {
-    padding: 10vh 20 vw;
-  }
 }
