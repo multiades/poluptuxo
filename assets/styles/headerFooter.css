@@ -136,10 +136,10 @@ label[for="navToggler"] {
 
 nav#navbar {
   position: fixed;
-  top: 62px;
+  top: 64px;
   left: 0;
   width: 100vw; 
-  height: calc(100% - 62px);
+  height: calc(100dvh - 64px);
   padding-top: 32px; /* For focus rings and styling */
   background-color: #333;
   transition: clip-path 800ms ease-in-out;
@@ -280,7 +280,7 @@ h1 {
 /* When the hidden checkbox is checked */
 input#navToggler:checked {
   &~div#navHeader {
-    transition-delay: 20ms; /* For display purposes, have the navbar and the nav header expand uniformly */
+    transition-delay: 0s; /* For display purposes, have the navbar and the nav header expand uniformly */
     clip-path: polygon(
       0 0,
       100% 0,
@@ -311,7 +311,7 @@ input#navToggler:checked {
   }
 
   &~label[for="navToggler"] {
-    transform: translateX(calc(100vw - 118px));
+    transform: translateX(calc(100vw - 110px));
     transition-delay: 100ms; /* Match the navheader delay */
 
     &>span { /* The ~ selector only works for subsequent siblings */
