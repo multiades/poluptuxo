@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Cera GR'; /* Internal name is not dependent on the file's name */
-  src: url('../fonts/CeraGr.ttf') format('truetype');
+  src: url('../fonts/CeraGR.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
