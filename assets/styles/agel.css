@@ -1,0 +1,105 @@
+@font-face {
+  font-family: 'Cera GR'; /* Internal name is not dependent on the file's name */
+  src: url('../fonts/CeraGr.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;	
+}
+
+html, 
+body {
+  width: 100%; /* More consistent than viewport units */
+  height: 100%;
+}
+  
+body {
+  font-family: 'Cera GR', sans-serif;
+  font-size: medium;
+}
+  
+a,
+label[for],
+button {
+  cursor: pointer; /* No need to us :hover, it is evident */
+}
+  	    
+a {
+  font-style: normal;
+  text-decoration: none;  
+} 
+
+main {
+  width: 100%;
+  height: auto;
+  text-align: left;
+
+  &>*:not(h2) {
+    margin: 1rem 8vw 0;
+  }
+}
+
+h2 {
+  width: 100%;
+  height: auto;
+  padding: 0.25rem 0 0.25rem 8vw;
+  background-color: orange;
+  color: white;
+  
+  &:nth-of-type(2) { /* :nth-child(2) matches the second child regardless of type */
+    margin-top: 1rem;
+  }
+}
+
+ul { /* ul is a black-level element, takes up 100% of its container's width */
+  &>li { /* li is a block-level element */
+    &:not(:first-child) {
+      margin-top: 1rem;
+    }  
+  }
+
+  &#toc {
+    list-style: none;
+    counter-reset: index; /* Set a counter at 0 */
+
+    &>li {
+      &:last-child { 
+        margin-bottom: 2rem; /* Margin-collapse on the following h3 */
+      }
+    
+      &>a { /* a is an inline-level element */
+        width: 100%;
+        height: auto;
+        display: grid;
+        grid-template-columns: 1.25rem 1fr;
+        column-gap: 0.75rem;
+        color: black;
+
+        &::before { /* No need for display: inline-block, a::before is a grid item */
+          counter-increment: index; /* Increase the counter at every instance */
+          content: counter(index); /* Can concatenate any additional characters within " " after a space and before the semicolon */
+          background-color: #9e5fa3;
+          height: 1.25rem; /* Not stretching the whole row */
+          color: white;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+h3 {
+  &:nth-of-type(1) {
+    margin-top: 1rem;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  main {
+    text-align: justify;
+  }
+}
