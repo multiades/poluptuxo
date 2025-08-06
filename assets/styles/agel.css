@@ -25,6 +25,7 @@ button {
 a {
   font-style: normal;
   text-decoration: none;
+  color: black;
 
   &:not([href="#toc"]):active {
     color: rebeccapurple;
