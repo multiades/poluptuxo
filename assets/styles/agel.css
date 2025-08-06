@@ -74,6 +74,10 @@ p {
   margin-top: 1rem;
 }   
 
+span.highlighted {
+  background-color: gold;
+}
+
 ul {
   list-style: none;
 
