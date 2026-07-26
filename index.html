@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" 
+        content="width=device-width,initial-scale=1.0"> <!-- Necessary for proper device viewport scalings -->
+  <link rel="stylesheet" 
+        href="./assets/styles/newGeneral.css">
+</head>
+<body>
+  <header>
+    <nav> <!-- Non interactive on load -->
+      <button type="button"
+              tabindex="0" 
+              aria-label="Μπάρα πλοήγησης" 
+              aria-controls="links" 
+              aria-expanded="false"
+              autocomplete="off">
+        <!-- Trigram's individual line halves, 2 per line -->
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+      <img src="./assets/images/asleepOwl.svg" 
+           class="logo bottom" 
+           aria-hidden="true">
+      <img src="./assets/images/halfAwakeOwl.svg"
+           class="logo middle"
+           aria-hidden="true">
+      <img src="./assets/images/awakeOwl.svg"
+           class="logo top" 
+           aria-hidden="true">
+      <img src="./assets/images/brand.svg"
+           id="brand"
+           alt="Τμήμα του λογοτύπου στ' οποίο αναγράφεται: Πολύπτυχο, φροντιστήριο μέσης εκπαίδευσης">
+      <ul id="links">
+        <li>
+          <details>
+            <summary>Εμείς</summary>
+            <ul>
+              <li><a>Item A</a></li>
+              <li><a>Item B</a></li>
+            </ul>
+          </details>
+        </li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+        <li><a>Το φροντιστήριο</a></li>
+      </ul>
+    </nav>
+    <p id="slogan">Αρωγός στην προσπάθεια του μαθητή</p>
+  </header>
+  <main>
+    <section id="guide">
+      <h2>Οδηγός επιτυχίας</h2>
+      <p>Το Φροντιστήριο Μέσης Εκπαίδευσης Πολύπτυχο αποτελεί έναν σύγχρονο χώρο εκπαίδευσης, ο οποίος δημιουργήθηκε με σκοπό την κάλυψη των πραγματικών αναγκών των μαθητών του γυμνασίου και του λυκείου.</p>
+      <p>Πρωταρχικός μας στόχος είναι η ολόπλευρη κι εις βάθος εκμάθηση των επιστημονικών αντικειμένων που αφορούν τα σχολικά μαθήματα. Είμαστε σίγουροι δε ότι μόνο αυτή η αντιμετώπιση της διδακτέας ύλης μπορεί να δώσει τη δυνατότητα στα παιδιά να αγαπήσουν πραγματικά τα μαθήματα τους και να τα φέρει σε θέση ικανή να διαβούν το κατώφλι του Πανεπιστημίου.</p>
+      <img src="./assets/images/composition.svg" aria-hidden="true">
+    </section> <!-- End of section#guide -->
+    <section id="submissions">
+      <h2>Εγγραφές</h2>
+      <p>Οι εγγραφές στο Φροντιστήριο Μέσης Εκπαίδευσης Πολύπτυχο για τα θερινά τμήματα του 2027 έχουν ξεκινήσει. Λειτουργούν τμήματα προετοιμασίας για τη Γ' Λυκείου.</p>
+      <p>Για περισσότερες πληροφορίες μπορείτε να επικοινωνήσετε με τη γραμματεία του φροντιστηρίου στο τηλέφωνο <a href="tel:00302108848188">210-8848188</a> καθημερινά από τις 13:00 έως τις 21:00.</p>
+    </section> <!-- End of section#submissions -->
+    <section id="contact-form">
+      <h2>Φόρμα επικοινωνίας</h2>
+      <form action="/contact" method="post">
+        <label for="name" class="invisible">Όνομα</label>
+        <input id="name" name="name" type="text" placeholder="'Ονομα" required>
+        <label for="email" class="invisible" lang="en">E-mail</label>
+        <input id="email" name="email" type="email" placeholder="Email" required>
+        <label for="msg" class="invisible">Μήνυμα</label>
+        <textarea id="msg" name="msg" rows="8" placeholder="Μήνυμα" required></textarea>
+        <button type="submit">Υποβολή</button>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <div class="contact">
+      <h2>Eπικοινωνία</h2>
+      <address>
+        <a href="tel:00302108848188">210-8848188</a>
+      </address>
+      <address>
+        <a href="mailto:info@poluptuxo.gr" lang="en">info@poluptuxo.gr</a>
+      </address>
+    </div> <!-- End of div.contact -->
+    <div class="address">
+      <h2>Διεύθυνση</h2>
+      <address>
+        <a href="#">Καυκάσου 134, Άνω Κυψέλη, 11363</a>
+        <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=23.798186480998996%2C38.021305297010265%2C23.801726996898655%2C38.02323443637716&amp;layer=mapnik&amp;marker=38.02226987304223%2C23.799956738948822"></iframe>
+        <small><a href="https://www.openstreetmap.org/?mlat=38.022271&amp;mlon=23.799957#map=19/38.022270/23.799957&amp;layers=N">Προβολή πλήρους χάρτη</a></small>
+      </address>
+    </div> <!-- End of div.address -->  
+    <img src="./assets/images/awakeOwl.svg" aria-hidden="true">
+    <div class="links">
+      <h2>Χρήσιμοι σύνδεσμοι</h2>
+      <a href="#">Οικονομικές προσφορές</a>
+    </div> <!-- End of div.links -->
+    <div class="social">
+      <h2>Ακολουθήστε μας</h2>
+      <address>
+        <a href="#" lang="en">facebook</a>
+      </address>
+    </div> <!-- End of div.social -->
+  </footer>
+  <!-- Scripts -->
+  <script src="./assets/scripts/navbar2.js"></script>  
+</body>
+</html>
