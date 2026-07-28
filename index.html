@@ -8,8 +8,19 @@
         href="./assets/styles/newGeneral.css">
 </head>
 <body>
+  <!-- SVGS -->
+  <svg class="invisible"
+       aria-hidden="true">
+    <defs>
+      <mask id="owl-mask" 
+            maskUnits="objectBoundingBox"
+            maskContentUnits="objectBoundingBox">
+        <path fill="#fff" d="M 0.0405,0.0101 L 0.0355,0.0241 L 0.0555,0.0671 L 0.0830,0.0974 L 0.1220,0.1245 L 0.1255,0.1351 L 0.0830,0.1905 L 0.0590,0.2417 L 0.0480,0.3063 L 0.0100,0.4322 L 0.0000,0.5051 L 0.0095,0.5137 L 0.0455,0.5195 L 0.0540,0.5601 L 0.1135,0.5644 L 0.1215,0.6208 L 0.1400,0.6797 L 0.1995,0.7791 L 0.2525,0.8316 L 0.3175,0.8746 L 0.3875,0.9030 L 0.4615,0.9175 L 0.5330,0.9180 L 0.6120,0.9030 L 0.6820,0.8746 L 0.7410,0.8365 L 0.8000,0.7791 L 0.8425,0.7159 L 0.8720,0.6440 L 0.8860,0.5639 L 0.9455,0.5601 L 0.9525,0.5499 L 0.9545,0.5195 L 0.9910,0.5133 L 0.9995,0.5060 L 0.9900,0.4308 L 0.9520,0.3058 L 0.9420,0.2441 L 0.9160,0.1886 L 0.8750,0.1375 L 0.8785,0.1240 L 0.9410,0.0714 L 0.9605,0.0357 L 0.9625,0.0130 L 0.9510,0.0077 L 0.8860,0.0222 L 0.6970,0.0400 L 0.5950,0.0092 L 0.4800,0.0010 L 0.3850,0.0130 L 0.3000,0.0400 Z"/>
+      </mask>
+    </defs>
+  </svg>
   <header>
-    <nav> <!-- Non interactive on load -->
+    <nav class="is-retracted"> <!-- Non interactive on load -->
       <button type="button"
               tabindex="0" 
               aria-label="Μπάρα πλοήγησης" 
@@ -21,51 +32,46 @@
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </button>
-      <img src="./assets/images/asleepOwl.svg" 
+      <img src="./assets/images/asleep-owl.svg" 
            class="logo bottom" 
            aria-hidden="true">
-      <img src="./assets/images/halfAwakeOwl.svg"
+      <img src="./assets/images/half-asleep-owl.svg"
            class="logo middle"
            aria-hidden="true">
-      <img src="./assets/images/awakeOwl.svg"
+      <img src="./assets/images/owl.svg"
            class="logo top" 
            aria-hidden="true">
       <img src="./assets/images/brand.svg"
            id="brand"
            alt="Τμήμα του λογοτύπου στ' οποίο αναγράφεται: Πολύπτυχο, φροντιστήριο μέσης εκπαίδευσης">
       <ul id="links">
+        <li><a>Αρχική</a></li>
         <li>
           <details>
-            <summary>Εμείς</summary>
+            <summary>Το φροντιστήριο</summary>
             <ul>
-              <li><a>Item A</a></li>
-              <li><a>Item B</a></li>
+              <li><a>Διδακτικό προσωπικό</a></li>
+              <li><a>Εγκαταστάσεις</a></li>
             </ul>
           </details>
         </li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
-        <li><a>Το φροντιστήριο</a></li>
+        <li>
+          <details>
+            <summary>Προγράμματα σπουδών</summary>
+            <ul>
+              <li><a>Α' Γυμνασίου</a></li>
+              <li><a>Β' Γυμνασίου</a></li>
+              <li><a>Γ' Γυμνασίου</a></li>
+              <li><a>Α' Γενικού Λυκείου</a></li>
+              <li><a>Β' Γενικού Λυκείου</a></li>
+              <li><a>Γ' Γενικού Λυκείου</a></li>
+              <li><a>Α' Επαγγελματικού Λυκείου</a></li>
+              <li><a>Β' Επαγγελματικού Λυκείου</a></li>
+              <li><a>Γ' Επαγγελματικού Λυκείου</a></li>
+            </ul>
+          </details>
+        </li>
+        <li><a>Υπολογισμός μορίων</a></li>
       </ul>
     </nav>
     <p id="slogan">Αρωγός στην προσπάθεια του μαθητή</p>
@@ -109,11 +115,9 @@
       <h2>Διεύθυνση</h2>
       <address>
         <a href="#">Καυκάσου 134, Άνω Κυψέλη, 11363</a>
-        <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=23.798186480998996%2C38.021305297010265%2C23.801726996898655%2C38.02323443637716&amp;layer=mapnik&amp;marker=38.02226987304223%2C23.799956738948822"></iframe>
-        <small><a href="https://www.openstreetmap.org/?mlat=38.022271&amp;mlon=23.799957#map=19/38.022270/23.799957&amp;layers=N">Προβολή πλήρους χάρτη</a></small>
       </address>
-    </div> <!-- End of div.address -->  
-    <img src="./assets/images/awakeOwl.svg" aria-hidden="true">
+    </div> <!-- End of div.address -->
+    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=23.748080134391788%2C38.00311648930387%2C23.750172257423404%2C38.00682773601455&amp;layer=mapnik&amp;marker=38.0049721361401%2C23.749126195907593"></iframe>
     <div class="links">
       <h2>Χρήσιμοι σύνδεσμοι</h2>
       <a href="#">Οικονομικές προσφορές</a>
