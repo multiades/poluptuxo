@@ -2,17 +2,14 @@
 
 @font-face {
   font-family: "Cera-GR"; /* Internal name is not dependent on the file's name */
-  src: 
-    url("../fonts/CeraGR.ttf") 
-    format("trueType");
+  src: url("../fonts/CeraGR.ttf") format("trueType");
   font-weight: normal;
   font-style: normal;
 }
 
-/* NULLIFIER FOR USER AGENT SHEET PROPERTIES */
+/* NULLIFYING USER AGENT SHEET PROPERTIES */
 
 a,
-label[for],
 button {
   cursor: pointer; /* No need to us :hover, it is evident */
 }
@@ -67,19 +64,73 @@ body {
 }
   
 body {
+  /* Custom CSS properties */
   --theme-bg-colour: #96f;
-  --frame: polygon(
+  --bubble-tail: 20px;
+  --edge-gap: min(12px, 8vh); /* Maximum gap on the edges is 12 pixels */
+  /* Logo and button are squares, equal dimensions */
+  --button: min(20px, 12vh);
+  --logo: min(48px, 10vh);
+  --nav-head: calc(2 * var(--edge-gap) + var(--logo));
+  --nav-bg-colour: #fbf5df;
+  --clipping-duration: 600ms;
+  --fade-duration: 200ms;
+  --nav-head-frame: polygon(
     0 0,
-    24px 24px,
-    calc(50vw - 16px) 24px,
-    50vw 36px,
-    calc(50vw + 16px) 24px,
-    calc(100% - 24px) 24px,
+    100% 0,
+    100% calc(var(--edge-gap) + var(--logo)),
+    calc(100% - var(--edge-gap)) 100%,
+    0 100%
+  );
+  --trigram-line: calc(var(--button) / 5); /* Operating on unitless numbers preserves the unit */
+  --trigram-duration: 400ms;
+  --link-font-size: clamp(1.5rem, 1vw + 1rem, 2rem); /* Add one rem to the middle value to respect zoom stylings */
+  --slogan-frame: polygon( /* Requires a top-padding of at least var(--bubble-tail) */
+    0 0,
+    var(--bubble-tail) var(--bubble-tail),
+    calc(100% - var(--bubble-tail)) var(--bubble-tail),
+    100% calc(2 * var(--bubble-tail)),
+    100% 100%,
+    0 100%
+  );
+  /*
+  --slogan-frame-2: polygon(
+    0 0,
+    20px 20px,
+    calc(50vw - 16px) 20px,
+    50vw 32px,
+    calc(50vw + 16px) 20px,
+    calc(100% - 24px) 20px,
     100% 0,
     100% 100%,
     0 100%
   );
+  */
+  --h2-frame: polygon( /* Needs at least 2 * var(--bubble-tail) bottom padding */
+    0 0,
+    100% 0,
+    calc(100% - var(--bubble-tail)) calc(100% - var(--bubble-tail)),
+    calc(25% + var(--bubble-tail)) calc(100% - var(--bubble-tail)),
+    25% 100%,
+    25% calc(100% - var(--bubble-tail)),
+    var(--bubble-tail) calc(100% - var(--bubble-tail))
+  );
+  --h2-bg-colour: gold;
+      /*
+      var(--bubble-tail) 0,
+      calc(100% - var(--bubble-tail)) 0,
+      100% var(--bubble-tail),
+      100% calc(100% - 2 * var(--bubble-tail)),
+      calc(100% - var(--bubble-tail)) calc(100% - var(--bubble-tail)),
+      calc(25% + var(--bubble-tail)) calc(100% - var(--bubble-tail)),
+      25% 100%,
+      25% calc(100% - var(--bubble-tail)),
+      var(--bubble-tail) calc(100% - var(--bubble-tail)),
+      0 calc(100% - 2 * var(--bubble-tail)),
+      0 var(--bubble-tail)
+      */
 
+  /* Other body properties */
   font-family: "Cera-GR", Sans-serif;
   font-size: medium; /* Default */
 }
@@ -89,41 +140,23 @@ body {
 header {
   width: 100%;
   height: 100vh; /* Fallback */
-  height: 100lvh;
-  background: 
-    url('../../assets/images/hero.jpg')
-    center/cover 
-    no-repeat;
+  height: 100svh; /* Shortest full viewport */
+  background: url('../../assets/images/hero.jpg') center/cover no-repeat;
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
 }
 
 nav {
-  --gap: min(12px, 8vh); /* Maximum gap is 12 pixels */
-  --bubble-tail: 20px;
-  /* Logo and button are squares */
-  --button: min(20px, 12vh);
-  --logo: min(48px, 10vh);
-  --head-height: calc(2 * var(--gap) + var(--logo));
-  --head-bg-colour: #fbf5df;
-  --clipping-duration: 600ms;
-  --fade-duration: 200ms;
-
   width: 100%;
   height: 100vh;
   height: 100dvh; /* Dynamically cover the viewport at every position, scroll locking is in place */
   position: fixed;
   top: 0;
-  z-index: 1; /* Above p#slogan and main, which are at subsequent stack contexts */
+  z-index: 1; /* Above p#slogan and main, which are located at subsequent stack contexts, auto-indexed and z-index 0 respectively */
   display: grid;
-  grid-template-rows:
-    var(--head-height)
-    1fr;
-  grid-template-columns:
-    var(--button)
-    var(--logo)
-    1fr;
+  grid-template-rows: var(--nav-head) 1fr;
+  grid-template-columns: var(--button) var(--logo) 1fr;
   grid-template-areas:
     "trigram logo brand"
     "links links links";
@@ -131,55 +164,40 @@ nav {
   align-items: center; /* Block (vertical) axis */
   /* No column-gap or padding for alignment reasons */
   
-  &::before { /* Pseudoelement for the nav header's background */
+  &::before { /* Pseudoelement for applying a background colour to nav header */
     content: "";
     position: absolute;
+    z-index: -1; /* Placed below its auto-indexed sibling button and images */
     top: 0;
     left: 0;
-    width: calc(3 * var(--gap) + var(--button) + var(--logo));
-    height: var(--head-height);
-    background-color: var(--head-bg-colour);
+    width: calc(3 * var(--edge-gap) + var(--button) + var(--logo));
+    height: var(--nav-head);
+    background-color: var(--nav-bg-colour);
     /* Transitioning on GPU-accelerated clip-path instead of CPU-intensive properties like height, which cause document reflow */
     transition: clip-path var(--clipping-duration) ease-in-out;
     transition-delay: 0s;
-    clip-path: polygon(
-      0 0,
-      100% 0,
-      100% calc(var(--gap) + (var(--button) + var(--logo)) / 2),
-      calc(100% - var(--bubble-tail)) 100%,
-      0 100%
-    );
+    clip-path: var(--nav-head-frame);
   }
 }
 
-button[aria-controls="links"],
-img.logo,
-img#brand {
-  z-index: 0; /* Above nav::before, because it is absolutely placed and therefore above auto z-indexed siblings */
-}
-
 button[aria-controls="links"] {
-  --line: calc(var(--button) / 5); /* Operating on unitless numbers preserves the unit */
-  --morphing-duration: 400ms;
-
   width: var(--button);
   height: var(--button);
-  margin-left: var(--gap);
+  margin-left: var(--edge-gap);
   grid-area: trigram;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  row-gap: var(--line);
-  align-items: flex-start;
+  row-gap: var(--trigram-line);
   /* The button has no transition delay in both states, more aesthetic this way */
-  transition: transform var(--morphing-duration) ease-in-out;
+  transition: transform var(--trigram-duration) ease-in-out;
+  pointer-events: auto;
 
   &>span {
     width: 100%;
-    height: var(--line);
+    height: var(--trigram-line);
     flex-shrink: 0;
     /* The animation may suffer if we solely transition upon transform and opacity */
-    transition: all calc(var(--morphing-duration) / 2) ease-in-out; /* Half the label rotation's duration */
+    transition: all calc(var(--trigram-duration) / 2) ease-in-out; /* Half the label rotation's duration */
     transition-delay: 0s; /* If the navbar is already expanded, transition immediately */
     background-color: #333;
   }
@@ -188,7 +206,7 @@ button[aria-controls="links"] {
 img.logo {
   height: var(--logo);
   grid-area: logo;
-  margin-left: calc(2 * var(--gap));
+  margin-left: calc(2 * var(--edge-gap));
   transition: transform var(--clipping-duration) ease-in-out 0s;
 }
 
@@ -202,23 +220,23 @@ ul#links>li {
 img#brand {
   height: calc(.75 * var(--logo));
   grid-area: brand;
-  margin-left: calc(3 * var(--gap)); /* Juxtaposed to img.logo */
+  margin-left: calc(3 * var(--edge-gap)); /* Juxtaposed to img.logo */
 }
 
 ul#links {
-  --font-size: clamp(1.5rem, 1vw + 1rem, 2rem); /* Add one rem to the middle value to respect zoom stylings */
-
   width: 100%;
   height: 100%;
   grid-area: links;
   overflow-y: auto;
-  background-color: var(--head-bg-colour);
+  background-color: var(--nav-bg-colour);
   list-style: none;
   transition: clip-path var(--clipping-duration) ease-in-out 0s;
+  /* Checkpoint */
   clip-path: polygon(
     0 0,
+    calc(var(--bubble-tail) / 2) 0,
     var(--bubble-tail) 0,
-    calc(var(--bubble-tail) / 2) calc(var(--bubble-tail) / 2), /* Similar triangles, the λ is 2 */
+    0 var(--bubble-tail),
     0 var(--bubble-tail)
   );
   display: flex;
@@ -228,20 +246,20 @@ ul#links {
   &>li {
     width: 100%;
     flex-shrink: 0; /* All flex anchor items won't get squished (scootched) on overflows */
-    /* padding: .2rem var(--gap); */
+    /* padding: .2rem var(--edge-gap); */
 
     & a {
-      font-size: var(--font-size);
+      font-size: var(--link-font-size);
       user-select: none; /* Can't highlight anything, it can be inherited but some browsers inject specific styling for it */
-      margin-left: var(--gap);
+      margin-left: var(--edge-gap);
     }
   }
 }
 
 details {
   &>summary {
-    margin-left: var(--gap);
-    font-size: var(--font-size);
+    margin-left: var(--edge-gap);
+    font-size: var(--link-font-size);
     user-select: none;
     display: flex;
     align-items: center;
@@ -251,8 +269,8 @@ details {
       background-color: black;
       display: inline-block; /* To respect transition and size*/
       margin-left: .75rem;
-      width: var(--font-size);
-      height: var(--font-size);
+      width: var(--link-font-size);
+      height: var(--link-font-size);
       clip-path: polygon(
         0 25%,
         30% 25%,
@@ -274,52 +292,55 @@ details[open] {
 
   &>ul {
     background-color: gold;
-    padding-left: var(--gap);
+    padding-left: var(--edge-gap);
   }
 }
-    
-/* When the hamburger button is pressed */
+
+nav.is-retracted {
+  pointer-events: none; /* Disable nav's pointer-events so elements in main and footer can be toggled, only the hamburger button should be reacheable at all times */
+}
+
 nav.is-expanded {
-  &::before {
-    clip-path: polygon(
-      0 0,
-      calc(2 * var(--gap) + var(--button)) 0,
-      calc(2 * var(--gap) + var(--button)) calc(var(--gap) + (var(--button) + var(--logo)) / 2),
-      calc(2 * var(--gap) + var(--button) + var(--bubble-tail)) 100%,
-      0 100%
-    );
-  }
+  --nav-head-frame: polygon(
+    0 0,
+    calc(2 * var(--edge-gap) + var(--button)) 0,
+    calc(2 * var(--edge-gap) + var(--button)) calc(var(--edge-gap) + var(--logo)),
+    calc(3 * var(--edge-gap) + var(--button)) 100%,
+    0 100%
+  );
+
+  pointer-events: auto; /* Enable all pointer events */
 
   &>button[aria-controls="links"] {
     transform: rotate(-180deg);
 
     &>span {
       &:not(:nth-child(2)) {
-        transition-delay: calc(var(--morphing-duration) / 2); /* Waiting for half of the label rotation's durationinstead of the whole (smoothness) */
+        transition-delay: calc(var(--trigram-duration) / 2); /* Waiting for half of the label rotation's durationinstead of the whole (smoothness) */
       }
 
       &:nth-child(1) {
         /* Translation first, otherwise the transform-origin skewes the translation after rotation */
-        transform: translateY(calc(var(--line) * 2)) rotate(-45deg); /* Aligning its center with the label's */
+        transform: translateY(calc(var(--trigram-line) * 2)) rotate(-45deg); /* Aligning its center with the label's */
       }
 
       &:nth-child(2) {
         /* Central span becomes opaque, with no delay, start the opacity's transition a little sooner, we don't care about the bg colour since the span becomes opaque */
-        transition-delay: calc(var(--morphing-duration) / 4);
+        transition-delay: calc(var(--trigram-duration) / 4);
         opacity: 0;
       }
    
       &:nth-child(3) {
-        transform: translateY(calc(var(--line) * -2)) rotate(45deg);
+        transform: translateY(calc(var(--trigram-line) * -2)) rotate(45deg);
       }
     }
   }
 
   &>img.logo {
-    transform: translateX(var(--gap));
+    transform: translateX(var(--edge-gap));
     /*
-    transform: translateX(calc(50vw - 3 * var(--gap) - var(--logo) / 2)); - 2 * var(--gap) plus the left margin, translateX to the middle of teh viewport
-    transform: translateX(calc(50dvw - 3 * var(--gap) - var(--logo) / 2));
+    transform: translateX(calc(50vw - 3 * var(--edge-gap) - var(--logo) / 2)); - 2 * var(--edge-gap) plus the left margin, translateX to the middle of teh viewport
+    transform: translateX(calc(50dvw - 3 * var(--edge-gap) - var(--logo) / 2));
     */
     animation-duration: calc(var(--clipping-duration) / 2);
     animation-timing-function: linear;
@@ -342,10 +363,11 @@ nav.is-expanded {
 
   &>ul#links {
     clip-path: polygon(
-      100% 100%,
       100% 0,
-      0 0,
-      0 100%
+      100% 100%,
+      0 100%,
+      0 var(--bubble-tail),
+      0 0
     );
   }      
 }
@@ -356,21 +378,21 @@ p#slogan {
   height: auto;
   position: fixed;
   bottom: 0;
-  padding: 48px 16px 16px;
+  padding: 32px 8px 8px;
   text-align: center;
   color: white;
   font-size: 1.5rem;
   overflow-wrap: break-word;
   background-color: var(--theme-bg-colour);
-  clip-path: var(--frame);
+  clip-path: var(--slogan-frame);
 }
 
 main {
   --vertical-gap: 4rem;
   --horizontal-gap: 10vw;
-    
-  position: relative; /* To create a stacking context coupled with z-index */
-  z-index: 0; /* Above p#slogan at z-index 0, new stacking context that is why the z-index stays the same */
+
+  position: relative; /* To create a stacking context coupled with z-index, so main can be placed above p#slogan, which is a previous element with its own stack-context */
+  z-index: 0; /* Lowest possible z-index for p#slogan to slide under main */
   background-image: linear-gradient(
     260deg,
     rgb(239, 234, 234) 0%,
@@ -385,54 +407,43 @@ main {
 section {
   display: flex;
   flex-direction: column;
+  align-items: center;
   row-gap: 2rem;
 
+  &>p { 
+    align-self: flex-start;
+  }
+
   &>img {
-    align-self: center;
+    width: clamp(300px, 60vw, 400px);
     box-shadow: 2px 2px 4px #333;
-  }
-
-  &:not(#contact-form) {
-    padding-left: var(--horizontal-gap);
-    padding-right: var(--horizontal-gap);
-  }
-
-  &#contact-form {
-    width: 100%; 
-    background-color: var(--theme-bg-colour);
-    /*    clip-path: var(--frame); */
   }
 }
 
-section:not(#contact-form)>h2 {
-  --bg-colour: gold;
+section:not(#contact-form) {
+  padding: 0 var(--horizontal-gap);
 
-  position: relative;
-  padding: 8px;
-  width: max-content;
-  border-radius: 16px;
-  background-image: linear-gradient(
-    to bottom,
-    transparent 60%,
-    var(--bg-colour) 60%,
-    var(--bg-colour) 100% /* Necessary to close the gradient for Safari */
-  );
-
-  &::after {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    top: 100%; /* Of the pseudoelement's parent */
-    left: 25%;
-    background-color: var(--bg-colour);
-    width: 32px;
-    height: 16px;
-    clip-path: polygon(
-      25% 0,
-      75% 0,
-      25% 100%,
-      25% 0
+  &>h2 {
+    padding: 0 var(--bubble-tail) var(--bubble-tail);
+    width: max-content;
+    clip-path: var(--h2-frame);
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0 40%,
+      var(--h2-bg-colour) 40% 100%
     );
+  }
+}
+
+section#contact-form {
+  width: 100%; 
+  background-color: var(--theme-bg-colour);
+  padding: calc(2 * var(--bubble-tail)) 0;
+  clip-path: var(--slogan-frame);
+
+  &>h2 {
+    color: white;
+    text-align: center;
   }
 }
 
@@ -454,7 +465,6 @@ form {
   &>input,
   &>textarea {
     width: 100%;
-    border-radius: 8px;
     background-color: var(--theme-bg-colour); /* White gets injected here by the browser */
     border: 1px solid white;
     padding: 0.5rem;
@@ -477,12 +487,24 @@ form {
   }
 
   &>button {
-    padding: .5rem 1rem;
+    padding: .5rem 1rem 1.75rem;
     background-color: rebeccapurple;
     color: white;
     border: none;
-    border-radius: 16px;
     text-align: center;
+    clip-path: polygon(
+      0 15%,
+      10% 0,
+      90% 0,
+      100% 15%,
+      100% calc(85% - var(--bubble-tail)),
+      90% calc(100% - var(--bubble-tail)),
+      calc(25% + var(--bubble-tail)) calc(100% - var(--bubble-tail)),
+      25% 100%,
+      25% calc(100% - var(--bubble-tail)),
+      10% calc(100% - var(--bubble-tail)),
+      0 calc(85% - var(--bubble-tail))
+    );
 
     &:hover,
     &:focus {
@@ -567,14 +589,19 @@ footer {
       align-items: center;
     }
   }
-  
-  &>img {
-    display: block;
-    width: 6rem;
-    height: auto;
-    grid-area: logo;
-    place-self: center;
-  }    
+}
+
+iframe {
+  width: clamp(200px, 80%, 300px);
+  aspect-ratio: 1 / 1;
+  grid-area: logo;
+  place-self: center;
+  mask-image: url(#owl-mask);
+  -webkit-mask-image: url(#owl-mask);   /* Safari still needs the prefix */
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
 }
 
 /*====MEDIA QUERIES====*/
@@ -583,30 +610,15 @@ footer {
 }
 
 @media only screen and (min-width: 480px) { /* Landscape mode */
-  section {
-    &>img {
-      width: 60vw;
-    }   
-
-    &>form {
-      padding-left: 48px;
-      padding-right: 48px;
-    }
-  }
-
-  form>button {
-    width: fit-content;
-    padding: .5rem 1rem;
-  }
-
-  iframe {
-    height: 144px;
-  }
 }
 
 /* Need to have a JS validation for the one-liner navbar */
 
 @media only screen and (min-width: 768px) { /* Medium screens */
+  nav {
+    width: 30vw;
+  }
+
   footer {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
@@ -669,11 +681,6 @@ footer {
     font-size: 2rem;
   }
 
-  section {
-    &#contactForm {
-    }
-  } 
-
   form {
     margin-top: var(--formPadding);
 
@@ -709,7 +716,7 @@ footer {
 
 /* HOVERING
 details[open] {
-  background-color: var(--head-bg-colour);Cover up the parent ul's hovering bg colour
+  background-color: var(--nav-bg-colour);Cover up the parent ul's hovering bg colour
   &>summary,
   &>ul>li {
     &:hover {
