@@ -65,7 +65,7 @@ body {
   
 body {
   /* Custom CSS properties */
-  --theme-bg-colour: #96f;
+  --theme-bg-colour: transparent; /* #96f */
   --bubble-tail: 20px;
   --edge-gap: min(12px, 8vh); /* Maximum gap on the edges is 12 pixels */
   /* Logo and button are squares, equal dimensions */
