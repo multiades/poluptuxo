@@ -172,7 +172,7 @@ nav {
     left: 0;
     width: calc(3 * var(--edge-gap) + var(--button) + var(--logo));
     height: var(--nav-head);
-    background-color: var(--nav-bg-colour);
+    background-color: var(--theme-bg-colour);
     /* Transitioning on GPU-accelerated clip-path instead of CPU-intensive properties like height, which cause document reflow */
     transition: clip-path var(--clipping-duration) ease-in-out;
     transition-delay: 0s;
@@ -228,7 +228,7 @@ ul#links {
   height: 100%;
   grid-area: links;
   overflow-y: auto;
-  background-color: var(--nav-bg-colour);
+  background-color: var(--theme-bg-colour);
   list-style: none;
   transition: clip-path var(--clipping-duration) ease-in-out 0s;
   /* Checkpoint */
